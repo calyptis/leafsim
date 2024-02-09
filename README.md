@@ -28,7 +28,7 @@ pip install git+https://github.com/
 
 # Usage example
 
-A complete example is available in this [notebook](notebooks/Example.ipynb).
+A complete example is available in this [notebook](notebooks/Simple_Example/Example.ipynb).
 Below is a "quick start" example:
 
 ```python
@@ -86,7 +86,7 @@ to explain.
 
 <img src="resources/leaf_index.png" alt="drawing" width="600"/>
 
-As an example, consider explaining the prediction of this observation of an Iris flower (see [notebook](notebooks/Example.ipynb)):
+As an example, consider explaining the prediction of this observation of an Iris flower (see [notebook](notebooks/Simple_Example/Example.ipynb)):
 
 <img src="resources/to_explain.png" alt="drawing" width="600"/>
 
