@@ -57,10 +57,10 @@ top_n = 10  # Number of explanations per data-point
 explanation_ids, explanation_similarities = leafsim_instance.generate_explanations(
     X_train, X_to_explain, top_n=top_n
 )
-# explanation_ids: 
+# explanation_ids:
 #    - Shape: (len(X_to_explain), top_n)
 #    - Values: Indices of most similar data points in X_train
-# explanation_similarities: 
+# explanation_similarities:
 #    - Shape: (len(X_to_explain), top_n)
 #    - Values: Similarity score of corresponding data points referenced in explanation_ids
 
@@ -113,10 +113,12 @@ For a more comprehensive usage example, please refer to this blog post [https://
 
 If you use this software in your work, it would be appreciated if you would cite this tool, for instance using the following Bibtex reference:
 
-@software{itembed,
+```
+@software{leafsim,
   author = {Lucas Chizzali},
-  title = {leafsim},
-  url = {https://github.com/calypteris/leafsim},
+  title = {LeafSim: Example based XAI for decision tree ensembles},
+  url = {https://github.com/calyptis/LeafSim},
   version = {0.6.0},
-  date = {2024-xx-xx},
+  date = {2022-11-14},
 }
+```
