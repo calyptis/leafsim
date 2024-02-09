@@ -6,3 +6,4 @@ build/
 __pycache__
 .idea/
 catboost_info/
+.virtual_documents
