@@ -102,12 +102,12 @@ target different from the observation for which we wish to explain the predictio
 
 # Structure of repo
 
-- `notebooks/Example` contains a usage example of LeafSim
+- `notebooks/` contains a usage examples of LeafSim (simple and advanced)
 - `leafsim/` contains the Python code that constitutes the library
 
 # Further resources
 
-For a more comprehensive usage example, please refer to this blog post [https://datascience.ch/leafsim/](https://datascience.ch/leafsim/) and the corresponding [notebook](https://renkulab.io/projects/lucas.chizzali/leafsim/files/blob/notebooks/LeafSim.ipynb).
+For a more comprehensive usage example, please refer to this blog post [https://datascience.ch/leafsim/](https://datascience.ch/leafsim/) and the corresponding [notebook](notebooks/Advanced_Example/Example.ipynb).
 
 # Citation
 
