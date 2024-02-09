@@ -10,7 +10,7 @@ The proposed technique is:
 - straightforward to implement & maintain in production
 - computationally lightweight
 
-More details can be found in [this blog post](https://datascience.ch/leafsim/).
+More details can be found in [this blog post](https://datascience.ch/leafsim/) and the version accompanied by code found [here](https://calyptis.github.io/LeafSim/).
 
 # Installation
 
@@ -28,7 +28,7 @@ pip install git+https://github.com/
 
 # Usage example
 
-A complete example is available in this [notebook](notebooks/Simple_Example/Example.ipynb).
+A complete yet simple example is available in this [notebook](notebooks/Simple_Example/Example.ipynb).
 Below is a "quick start" example:
 
 ```python
@@ -107,7 +107,7 @@ target different from the observation for which we wish to explain the predictio
 
 # Further resources
 
-For a more comprehensive usage example, please refer to this blog post [https://datascience.ch/leafsim/](https://datascience.ch/leafsim/) and the corresponding [notebook](notebooks/Advanced_Example/Example.ipynb).
+For a more comprehensive usage example, please refer to this [blog post](https://calyptis.github.io/LeafSim/) and the corresponding [notebook](notebooks/Advanced_Example/Example.ipynb).
 
 # Citation
 
