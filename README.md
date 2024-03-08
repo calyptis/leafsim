@@ -23,7 +23,7 @@ pip install leafsim
 Or install from source, to ensure latest version:
 
 ```commandline
-pip install git+https://github.com/
+pip install git+https://github.com/calyptis/LeafSim
 ```
 
 # Usage example
