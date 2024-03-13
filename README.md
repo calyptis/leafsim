@@ -10,20 +10,14 @@ The proposed technique is:
 - straightforward to implement & maintain in production
 - computationally lightweight
 
-More details can be found in [this blog post](https://datascience.ch/leafsim/) and the version accompanied by code found [here](https://calyptis.github.io/LeafSim/).
+More details can be found in [this blog post](https://datascience.ch/leafsim/) and the version accompanied by code found [here](https://sdsc-innovation.github.io/leafsim/).
 
 # Installation
 
-Install from [PyPI](link):
+Install from source, to ensure latest version:
 
 ```commandline
-pip install leafsim
-```
-
-Or install from source, to ensure latest version:
-
-```commandline
-pip install git+https://github.com/calyptis/LeafSim
+pip install git+https://github.com/sdsc-innovation/leafsim
 ```
 
 # Usage example
@@ -107,7 +101,7 @@ target different from the observation for which we wish to explain the predictio
 
 # Further resources
 
-For a more comprehensive usage example, please refer to this [blog post](https://calyptis.github.io/LeafSim/) and the corresponding [notebook](notebooks/Advanced_Example/Example.ipynb).
+For a more comprehensive usage example, please refer to this [blog post](https://sdsc-innovation.github.io/leafsim/) and the corresponding [notebook](notebooks/Advanced_Example/Example.ipynb).
 
 # Citation
 
