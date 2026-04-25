@@ -1,6 +1,6 @@
 [project]
 name = "leafsim"
-version = "0.2.0"
+version = "1.0.0"
 description = "Explainable AI for tree based ensemble models"
 readme = "README.md"
 authors = [{ name = "Lucas Chizzali", email = "lucas.chizzali@datascience.ch"}]
@@ -8,9 +8,17 @@ license = { file = "LICENSE" }
 requires-python = ">=3.10"
 dependencies = [
     "numpy >= 1.23.5",
-    "scikit-learn >= 1.1.3"
+    "scikit-learn >= 1.1.3",
 ]
 keywords = ["ML", "XAI", "explainable AI"]
+
+[project.urls]
+Repository = "https://github.com/calyptis/leafsim"
+Documentation = "https://sdsc-innovation.github.io/leafsim/"
+
+[dependency-groups]
+dev = ["pytest>=7.0"]
+notebooks = ["matplotlib>=3.6", "notebook>=7.0", "pandas>=1.5", "seaborn>=0.12"]
 
 [build-system]
 requires = [
