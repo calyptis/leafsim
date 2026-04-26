@@ -2,10 +2,10 @@
 
 `leafsim` identifies **which training examples most influenced a model's prediction**. It is an example-based **explainable AI (XAI)** technique for decision tree based ensemble methods.
 
-It works by tracking which leaf node each sample lands in across every tree of the ensemble. Samples that consistently land in the same leaves are considered similar, because they followed the same sequence of decision rules through the forest. Similarity is measured as Hamming distance over those leaf indices, and the closest training samples are returned as the explanation.
+LeafSim is most useful when you need to explain a prediction to someone who understands the training data. 
+In general, when explaining predictions to a domain expert who can judge whether the retrieved examples are reasonable analogues for the case at hand.
 
-The result is a human-readable answer to the question: *"which past cases does the model consider most similar to this new input?"*
-
+It complements feature-attribution methods (SHAP, LIME) rather than replacing them. Where SHAP answers *"which features drove this prediction?"*, LeafSim answers *"which training examples drove this prediction?"* — both perspectives are often needed.
 The technique is:
 - easy to interpret by non-technical domain experts
 - complementary to feature-attribution methods like SHAP and LIME
@@ -18,27 +18,25 @@ More details can be found in [this blog post](https://datascience.ch/leafsim/) a
 
 <img src="resources/leafsim.svg" alt="drawing" width="1000"/>
 
-**Example**
+**Summary**
 
-A model prediction for a given observation is explained by identifying the training samples that end up most often in the same leaf across the trees of the ensemble.
+LeafSim works by tracking which leaf node each sample lands in across every tree of the ensemble. Samples that consistently land in the same leaves are considered similar, because they followed the same sequence of decision rules through the forest. Similarity is measured as Hamming distance over those leaf indices, and the closest training samples are returned as the explanation.
+
+The result is a human-readable answer to the question: *"which past cases does the model consider most similar to this new input?"*
+
+**Example**
 
 As an example, consider explaining the prediction for this Iris flower observation (see [notebook](notebooks/Simple_Example/Example.ipynb)):
 
 <img src="resources/to_explain.png" alt="drawing" width="600"/>
 
-Using LeafSim, we identify the N training observations the model most relied on when making the prediction. The top 10 look like this:
+Using LeafSim, we identify the N training observations the model most relied on when making the prediction `predictedtarget`. The top 10 look like this:
 
 <img src="resources/explanation.png" alt="drawing" width="600"/>
 
-where `target` is $y$ and `similarity` the LeafSim score ranging from 0 (no similarity at all) to 1 (exactly the same features $x$ and target $y$).
+where `target` is the ground-truth label and `similarity` the LeafSim score ranging from 0 (no similarity at all) to 1 (exactly the same features $x$ and target $y$).
 
 In this example, the model makes an incorrect prediction because many of the most similar training observations carry a different target label — LeafSim makes this failure mode visible.
-
-# When to use LeafSim
-
-LeafSim is most useful when you need to explain a prediction to someone who understands the training data. For example: a clinician who can recognise specific past patients, a credit analyst who can evaluate similar prior loan applications, or a domain expert who can judge whether the retrieved examples are reasonable analogues for the case at hand.
-
-It complements feature-attribution methods (SHAP, LIME) rather than replacing them. Where SHAP answers *"which features drove this prediction?"*, LeafSim answers *"which training examples drove this prediction?"* — both perspectives are often needed.
 
 # Installation
 
