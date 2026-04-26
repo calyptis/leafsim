@@ -116,3 +116,30 @@ def test_regressor_output_shapes(fitted_regressor, iris):
     ids, sims = ls.generate_explanations(X_train, X_test, top_n=3)
     assert ids.shape == (X_test.shape[0], 3)
     assert sims.shape == (X_test.shape[0], 3)
+
+
+# --- XGBoost ---
+
+
+def test_xgb_regressor(iris):
+    xgb = pytest.importorskip("xgboost")
+    X_train, X_test, y_train = iris
+    model = xgb.XGBRegressor(n_estimators=10, random_state=42)
+    model.fit(X_train, y_train)
+    ls = LeafSim(model)
+    assert ls.model_name == "XGBRegressor"
+    ids, sims = ls.generate_explanations(X_train, X_test, top_n=5)
+    assert ids.shape == (X_test.shape[0], 5)
+    assert np.all(sims >= 0) and np.all(sims <= 1)
+
+
+def test_xgb_classifier(iris):
+    xgb = pytest.importorskip("xgboost")
+    X_train, X_test, y_train = iris
+    model = xgb.XGBClassifier(n_estimators=10, random_state=42, eval_metric="mlogloss")
+    model.fit(X_train, y_train)
+    ls = LeafSim(model)
+    assert ls.model_name == "XGBClassifier"
+    ids, sims = ls.generate_explanations(X_train, X_test, top_n=5)
+    assert ids.shape == (X_test.shape[0], 5)
+    assert np.all(sims >= 0) and np.all(sims <= 1)

@@ -23,6 +23,8 @@ LEAF_INDEX_FUNC = {
     "CatBoostClassifier": "calc_leaf_indexes",
     "RandomForestRegressor": "apply",
     "RandomForestClassifier": "apply",
+    "XGBRegressor": "apply",
+    "XGBClassifier": "apply",
 }
 # Default parameters to use for the models supported by LeafSim
 LEAF_INDEX_DEFAULT_PARAMS = {
@@ -40,6 +42,8 @@ LEAF_INDEX_DEFAULT_PARAMS = {
     },
     "RandomForestRegressor": {},
     "RandomForestClassifier": {},
+    "XGBRegressor": {},
+    "XGBClassifier": {},
 }
 
 SUPPORTED_MODELS = sorted(list(LEAF_INDEX_FUNC.keys()))
@@ -71,16 +75,12 @@ class LeafSim:
             try:
                 index_func = self.model.get_leaf_indices
             except AttributeError:
-                error_msg = "".join(
-                    [
-                        "Provide one the following currently supported models:\n\n",
-                        "\n".join(SUPPORTED_MODELS) + "\n\n",
-                        "or provide a custom model instance that ",
-                        "has get_leaf_indices as attribute.\n",
-                        "This is a function that returns the index of every predictor ",
-                        "in the ensemble in the form of a matrix: ",
-                        "[n_samples, n_predictors]",
-                    ]
+                supported = "\n".join(SUPPORTED_MODELS)
+                error_msg = (
+                    f"Provide one of the following currently supported models:\n\n"
+                    f"{supported}\n\n"
+                    f"or provide a custom model instance with a get_leaf_indices attribute.\n"
+                    f"This must be a function that returns leaf indices as a matrix of shape [n_samples, n_predictors]."
                 )
                 raise TypeError(error_msg)
         else:
