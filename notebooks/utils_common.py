@@ -1,4 +1,5 @@
 """Shared notebook utilities."""
+
 import matplotlib.pylab as plt
 import pandas as pd
 from matplotlib import colors

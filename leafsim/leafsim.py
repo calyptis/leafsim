@@ -7,6 +7,7 @@ the ensemble assign both samples to the same leaf node (Hamming distance over le
 indices). A high score means the two samples follow the same decision paths through
 the forest, making them naturally comparable for explanation purposes.
 """
+
 import logging
 from typing import Optional, Union
 
@@ -80,7 +81,8 @@ class LeafSim:
                     f"Provide one of the following currently supported models:\n\n"
                     f"{supported}\n\n"
                     f"or provide a custom model instance with a get_leaf_indices attribute.\n"
-                    f"This must be a function that returns leaf indices as a matrix of shape [n_samples, n_predictors]."
+                    f"This must be a function that returns leaf indices as a matrix of shape"
+                    f" [n_samples, n_predictors]."
                 )
                 raise TypeError(error_msg)
         else:
@@ -121,9 +123,7 @@ class LeafSim:
         params: Optional[dict] = None,
         top_n: int = 10,
         return_all_similarities: bool = False,
-    ) -> Union[
-        tuple[np.ndarray, np.ndarray], tuple[np.ndarray, np.ndarray, np.ndarray]
-    ]:
+    ) -> Union[tuple[np.ndarray, np.ndarray], tuple[np.ndarray, np.ndarray, np.ndarray]]:
         """
         Identify the training examples that explain the prediction of X_to_explain.
 
@@ -146,7 +146,8 @@ class LeafSim:
         """
         if top_n > X_train.shape[0]:
             raise ValueError(
-                f"top_n ({top_n}) cannot exceed the number of training samples ({X_train.shape[0]})"
+                f"top_n ({top_n}) cannot exceed the number of training samples"
+                f" ({X_train.shape[0]})"
             )
         logger.info("Getting leaf indices of samples in training data")
         train_leaf_indices = self.get_leaf_indices(X_train, params)
@@ -156,7 +157,9 @@ class LeafSim:
         distances = DistanceMetric.get_metric("hamming").pairwise(
             X=test_leaf_indices, Y=train_leaf_indices
         )
-        logger.info(f"Identifying top {top_n} most similar training data points for each test data point")
+        logger.info(
+            f"Identifying top {top_n} most similar training data points for each test data point"
+        )
         sorted_distances = np.argsort(distances, axis=1)
         # For each instance we want to explain, select only
         # the top N similar training instances
