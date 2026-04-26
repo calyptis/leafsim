@@ -18,7 +18,9 @@ jobs:
         run: uv sync --group dev
 
       - name: Lint
-        run: uv run pre-commit run --all-files
+        run: |
+          uv run ruff check .
+          uv run ruff format --check .
 
       - name: Test
         run: uv run pytest tests/
