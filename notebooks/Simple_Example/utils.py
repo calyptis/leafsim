@@ -3,6 +3,7 @@ Helper functions for the simple example notebook.
 
 Only used by the notebook and nowhere in the Python library.
 """
+
 import os
 import sys
 from typing import Dict

@@ -3,6 +3,7 @@ Helper functions for the advanced example notebook.
 
 Only used by the notebook and nowhere in the Python library.
 """
+
 import os
 import sys
 
@@ -24,9 +25,7 @@ def conditional_highlight(s: pd.Series, val: str) -> list[str]:
     :param val: Value entries in s should be equal to
     """
     mask = s == val
-    return [
-        "background-color: " if i else "background-color: lightcoral;" for i in mask
-    ]
+    return ["background-color: " if i else "background-color: lightcoral;" for i in mask]
 
 
 def get_similarity_table(
@@ -63,13 +62,11 @@ def get_similarity_table(
             similarity=lambda x: 1 - top_n_distances[car_to_explain_id, :],
             # Measure the relative price difference between similar cars and the car to explain
             # This column is used to colour the price column shown in the table
-            diff_price=lambda x: (x.price - d["predicted_price"]).abs()
-            / d["predicted_price"],
+            diff_price=lambda x: (x.price - d["predicted_price"]).abs() / d["predicted_price"],
             # Do the same as above for other numeric attributes
             diff_mileage=lambda x: (x.mileage - d["mileage"]).abs() / d["mileage"],
             diff_year=lambda x: (x.year - d["year"]).abs() / d["year"],
-            diff_enginesize=lambda x: (x.enginesize - d["enginesize"]).abs()
-            / d["enginesize"],
+            diff_enginesize=lambda x: (x.enginesize - d["enginesize"]).abs() / d["enginesize"],
         )
         .sort_values(by="similarity", ascending=False)
         .reset_index(drop=True)
@@ -85,7 +82,7 @@ def get_similarity_table(
             subset="price",
             cmap="Reds",
             df=df_to_show,
-            col=f"diff_price",
+            col="diff_price",
             upper_threshold=1,
         )
         .apply(
@@ -130,7 +127,7 @@ def get_similarity_plots(
     df_test: pd.DataFrame,
     distances: np.ndarray,
     car_to_explain_id: int,
-    test_avg_similarity: np.ndarray
+    test_avg_similarity: np.ndarray,
 ) -> None:
     """
     Visualises two matplotlib plots to summarise different similarity aspects.

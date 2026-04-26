@@ -1,11 +1,12 @@
 """Tests for leafsim.leafsim."""
+
 import numpy as np
 import pytest
 from sklearn.datasets import load_iris
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 from sklearn.model_selection import train_test_split
 
-from leafsim import LeafSim, SUPPORTED_MODELS
+from leafsim import SUPPORTED_MODELS, LeafSim
 
 
 @pytest.fixture
