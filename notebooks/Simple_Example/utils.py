@@ -1,52 +1,16 @@
 """
-Helper functions for the notebooks.
+Helper functions for the simple example notebook.
 
-Only used by them and nowhere in the Python library.
+Only used by the notebook and nowhere in the Python library.
 """
+import os
+import sys
 from typing import Dict
 
-import matplotlib.pylab as plt
 import pandas as pd
-from matplotlib import colors
 
-
-def conditional_background_gradient(
-    _,
-    df: pd.DataFrame,
-    cmap: str = "PuBu",
-    lower_threshold: float = 0,
-    upper_threshold: float = 0.5,
-    col: str = "diff_price",
-) -> list[str]:
-    """
-    Return background colouring for a given column conditioned on a different column.
-
-    (from a potentially even different dataframe - if same size).
-
-    :param _: Column to stylise (needs to be accepted by the function but is never used)
-    :param df: Dataframe containing the column based on which
-               the background gradient should be based
-    :param cmap: Colourmap to use for the background gradient
-                 (accepts valid matplotlib cmaps)
-    :param lower_threshold: The value at which the cmap should start
-                            (first colour will be used for this value
-                            and all that are smaller)
-    :param upper_threshold: The value at which the cmap should max out
-                            (last colour will be used of this value
-                            and all that are larger)
-    :param col: Column in df on which the background gradient should be based
-    """
-    # Adapted from
-    # https://stackoverflow.com/questions/47391948/pandas-style-background-gradient-using-other-dataframe
-    a = df.loc[:, col].copy()
-    norm = colors.Normalize(lower_threshold, upper_threshold)
-    normed = norm(a.values)
-    c = [colors.rgb2hex(x) for x in plt.cm.get_cmap(cmap)(normed)]
-    return ["background-color: %s" % color for color in c]
-
-
-# =========================
-# For the simple example
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+from utils_common import conditional_background_gradient  # noqa: E402
 
 
 def apply_formatting(

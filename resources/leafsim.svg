@@ -1,0 +1,2466 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 1500 1060"
+   font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+   version="1.1"
+   id="svg205"
+   sodipodi:docname="leafsim.svg"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview205"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="3.1041754"
+     inkscape:cx="446.65646"
+     inkscape:cy="205.6907"
+     inkscape:window-width="3360"
+     inkscape:window-height="1360"
+     inkscape:window-x="0"
+     inkscape:window-y="30"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg205" />
+  <defs
+     id="defs31">
+    <!-- Card shadow -->
+    <filter
+       id="cardShadow"
+       x="-0.0017857143"
+       y="-0.0081081084"
+       width="1.0035714"
+       height="1.0162162">
+      <feDropShadow
+         dx="0"
+         dy="6"
+         stdDeviation="10"
+         flood-color="#0f172a"
+         flood-opacity="0.07" />
+    </filter>
+    <filter
+       id="softShadow"
+       x="-0.015000001"
+       y="-0.015000001"
+       width="1.03"
+       height="1.03">
+      <feDropShadow
+         dx="0"
+         dy="2"
+         stdDeviation="3"
+         flood-color="#0f172a"
+         flood-opacity="0.10" />
+    </filter>
+    <!-- Subtle background gradient -->
+    <linearGradient
+       id="bgGrad"
+       x1="0"
+       y1="0"
+       x2="0"
+       y2="1">
+      <stop
+         offset="0%"
+         stop-color="#fafbff"
+         id="stop1" />
+      <stop
+         offset="100%"
+         stop-color="#f3f5fb"
+         id="stop2" />
+    </linearGradient>
+    <!-- Card backgrounds -->
+    <linearGradient
+       id="card1Grad"
+       x1="0"
+       y1="0"
+       x2="0"
+       y2="1">
+      <stop
+         offset="0%"
+         stop-color="#ecfdf5"
+         id="stop3" />
+      <stop
+         offset="60%"
+         stop-color="#ffffff"
+         id="stop4" />
+      <stop
+         offset="100%"
+         stop-color="#ffffff"
+         id="stop5" />
+    </linearGradient>
+    <linearGradient
+       id="card2Grad"
+       x1="0"
+       y1="0"
+       x2="0"
+       y2="1">
+      <stop
+         offset="0%"
+         stop-color="#eef2ff"
+         id="stop6" />
+      <stop
+         offset="60%"
+         stop-color="#ffffff"
+         id="stop7" />
+      <stop
+         offset="100%"
+         stop-color="#ffffff"
+         id="stop8" />
+    </linearGradient>
+    <linearGradient
+       id="card3Grad"
+       x1="0"
+       y1="0"
+       x2="0"
+       y2="1">
+      <stop
+         offset="0%"
+         stop-color="#fff7ed"
+         id="stop9" />
+      <stop
+         offset="60%"
+         stop-color="#ffffff"
+         id="stop10" />
+      <stop
+         offset="100%"
+         stop-color="#ffffff"
+         id="stop11" />
+    </linearGradient>
+    <!-- Header gradient -->
+    <linearGradient
+       id="titleGrad"
+       x1="0"
+       y1="0"
+       x2="1"
+       y2="0">
+      <stop
+         offset="0%"
+         stop-color="#059669"
+         id="stop12" />
+      <stop
+         offset="50%"
+         stop-color="#6366f1"
+         id="stop13" />
+      <stop
+         offset="100%"
+         stop-color="#d97706"
+         id="stop14" />
+    </linearGradient>
+    <!-- Bar gradients for step 3 -->
+    <linearGradient
+       id="barGrad"
+       x1="0"
+       y1="0"
+       x2="1"
+       y2="0">
+      <stop
+         offset="0%"
+         stop-color="#fbbf24"
+         id="stop15" />
+      <stop
+         offset="100%"
+         stop-color="#f97316"
+         id="stop16" />
+    </linearGradient>
+    <!-- Glow for highlighted path -->
+    <filter
+       id="leafGlow"
+       x="-0.46944444"
+       y="-0.46944444"
+       width="1.9388889"
+       height="1.9388889">
+      <feGaussianBlur
+         stdDeviation="3"
+         result="b"
+         id="feGaussianBlur16" />
+      <feMerge
+         id="feMerge17">
+        <feMergeNode
+           in="b"
+           id="feMergeNode16" />
+        <feMergeNode
+           in="SourceGraphic"
+           id="feMergeNode17" />
+      </feMerge>
+    </filter>
+    <!-- Arrow markers -->
+    <marker
+       id="arrowGreen"
+       viewBox="0 0 10 10"
+       refX="9"
+       refY="5"
+       markerWidth="6"
+       markerHeight="6"
+       orient="auto">
+      <path
+         d="M 0 0 L 10 5 L 0 10 z"
+         fill="#059669"
+         id="path17" />
+    </marker>
+    <marker
+       id="arrowIndigo"
+       viewBox="0 0 10 10"
+       refX="9"
+       refY="5"
+       markerWidth="6"
+       markerHeight="6"
+       orient="auto">
+      <path
+         d="M 0 0 L 10 5 L 0 10 z"
+         fill="#6366f1"
+         id="path18" />
+    </marker>
+    <marker
+       id="arrowAmber"
+       viewBox="0 0 10 10"
+       refX="9"
+       refY="5"
+       markerWidth="6"
+       markerHeight="6"
+       orient="auto">
+      <path
+         d="M 0 0 L 10 5 L 0 10 z"
+         fill="#d97706"
+         id="path19" />
+    </marker>
+    <marker
+       id="arrowSlate"
+       viewBox="0 0 10 10"
+       refX="9"
+       refY="5"
+       markerWidth="6"
+       markerHeight="6"
+       orient="auto">
+      <path
+         d="M 0 0 L 10 5 L 0 10 z"
+         fill="#94a3b8"
+         id="path20" />
+    </marker>
+    <!-- Reusable tree (plain, faded) -->
+    <symbol
+       id="treePlain"
+       viewBox="0 0 100 90">
+      <!-- edges -->
+      <line
+         x1="50"
+         y1="12"
+         x2="28"
+         y2="42"
+         stroke="#cbd5e1"
+         stroke-width="1.6"
+         id="line20" />
+      <line
+         x1="50"
+         y1="12"
+         x2="72"
+         y2="42"
+         stroke="#cbd5e1"
+         stroke-width="1.6"
+         id="line21" />
+      <line
+         x1="28"
+         y1="42"
+         x2="14"
+         y2="74"
+         stroke="#cbd5e1"
+         stroke-width="1.6"
+         id="line22" />
+      <line
+         x1="28"
+         y1="42"
+         x2="42"
+         y2="74"
+         stroke="#cbd5e1"
+         stroke-width="1.6"
+         id="line23" />
+      <line
+         x1="72"
+         y1="42"
+         x2="58"
+         y2="74"
+         stroke="#cbd5e1"
+         stroke-width="1.6"
+         id="line24" />
+      <line
+         x1="72"
+         y1="42"
+         x2="86"
+         y2="74"
+         stroke="#cbd5e1"
+         stroke-width="1.6"
+         id="line25" />
+      <!-- nodes -->
+      <circle
+         cx="50"
+         cy="12"
+         r="6"
+         fill="#94a3b8"
+         id="circle25" />
+      <circle
+         cx="28"
+         cy="42"
+         r="6"
+         fill="#94a3b8"
+         id="circle26" />
+      <circle
+         cx="72"
+         cy="42"
+         r="6"
+         fill="#94a3b8"
+         id="circle27" />
+      <circle
+         cx="14"
+         cy="74"
+         r="6"
+         fill="#93c5fd"
+         id="circle28" />
+      <circle
+         cx="42"
+         cy="74"
+         r="6"
+         fill="#fdba74"
+         id="circle29" />
+      <circle
+         cx="58"
+         cy="74"
+         r="6"
+         fill="#93c5fd"
+         id="circle30" />
+      <circle
+         cx="86"
+         cy="74"
+         r="6"
+         fill="#fdba74"
+         id="circle31" />
+    </symbol>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#titleGrad"
+       id="linearGradient218"
+       x1="0"
+       y1="0"
+       x2="21.071308"
+       y2="0"
+       gradientTransform="matrix(0.2847474,0,0,3.9246715,0,-5.7986415)"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <!-- ============ BACKGROUND ============ -->
+  <rect
+     width="1500"
+     height="1060"
+     fill="url(#bgGrad)"
+     id="rect31" />
+  <!-- ============ HEADER ============ -->
+  <text
+     x="750"
+     y="68"
+     text-anchor="middle"
+     font-size="44"
+     font-weight="800"
+     fill="url(#titleGrad)"
+     letter-spacing="-1"
+     id="text31">
+    LeafSim
+  </text>
+  <text
+     x="750"
+     y="102"
+     text-anchor="middle"
+     font-size="18"
+     font-weight="500"
+     fill="#475569"
+     id="text32">
+    Explaining tree-ensemble predictions by finding the training examples that shaped them most
+  </text>
+  <rect
+     x="168.03293"
+     y="125.17056"
+     width="1019.0835"
+     height="78.159012"
+     rx="25.865063"
+     fill="#ffffff"
+     stroke="#e0e7ff"
+     stroke-width="2.56979"
+     id="rect165-8" />
+  <!-- ============ GOAL BANNER ============ -->
+  <g
+     transform="translate(150, 130)"
+     id="g36">
+    <rect
+       x="0"
+       y="0"
+       width="1200"
+       height="74"
+       rx="16"
+       fill="#ffffff"
+       stroke="#e2e8f0"
+       stroke-width="1.2"
+       filter="url(#cardShadow)"
+       id="rect32" />
+    <!-- left accent bar -->
+    <rect
+       x="0"
+       y="-5.7986417"
+       width="6"
+       height="82.69796"
+       rx="3"
+       fill="url(#titleGrad)"
+       id="rect33"
+       style="fill:url(#linearGradient218);stroke-width:1.05714" />
+    <!-- target icon -->
+    <g
+       transform="translate(35.610734,16.845652)"
+       id="g35">
+      <circle
+         cx="15"
+         cy="15"
+         r="14"
+         fill="none"
+         stroke="#059669"
+         stroke-width="2"
+         id="circle33" />
+      <circle
+         cx="15"
+         cy="15"
+         r="8"
+         fill="none"
+         stroke="#059669"
+         stroke-width="2"
+         id="circle34" />
+      <circle
+         cx="15"
+         cy="15"
+         r="3"
+         fill="#059669"
+         id="circle35" />
+    </g>
+    <text
+       x="84"
+       y="14"
+       font-size="14px"
+       font-weight="700"
+       fill="#059669"
+       letter-spacing="2"
+       id="text35">THE GOAL</text>
+    <text
+       x="84"
+       y="38"
+       font-size="17px"
+       fill="#1e293b"
+       font-weight="500"
+       id="text36"><tspan
+         sodipodi:role="line"
+         id="tspan205"
+         x="84"
+         y="38">For any prediction, return the <tspan
+   font-weight="700"
+   fill="#059669"
+   id="tspan35">K training points</tspan> that most influenced it —</tspan><tspan
+         sodipodi:role="line"
+         id="tspan206"
+         x="84"
+         y="59.25">identified by counting how many <tspan
+   font-weight="700"
+   fill="#6366f1"
+   id="tspan36">leaves</tspan> they share with the test sample across every tree in the ensemble.</tspan></text>
+    <g
+       transform="translate(229.39806,149.32623)"
+       id="g168-4" />
+  </g>
+  <!-- ============ STEP CARDS ============ -->
+  <!-- ===== STEP 1: ENCODE ===== -->
+  <g
+     transform="translate(40, 240)"
+     id="g110">
+    <rect
+       width="450"
+       height="640"
+       rx="20"
+       fill="url(#card1Grad)"
+       stroke="#d1fae5"
+       stroke-width="1.5"
+       filter="url(#cardShadow)"
+       id="rect36" />
+    <!-- step number badge + title -->
+    <g
+       transform="translate(28, 28)"
+       id="g37">
+      <rect
+         width="44"
+         height="44"
+         rx="12"
+         fill="#059669"
+         id="rect37" />
+      <text
+         x="22"
+         y="31"
+         text-anchor="middle"
+         font-size="22"
+         font-weight="800"
+         fill="#ffffff"
+         id="text37">1</text>
+    </g>
+    <text
+       x="86"
+       y="48"
+       font-size="13"
+       font-weight="700"
+       fill="#059669"
+       letter-spacing="2"
+       id="text38">STEP ONE</text>
+    <text
+       x="86"
+       y="72"
+       font-size="24"
+       font-weight="800"
+       fill="#064e3b"
+       id="text39">Encode</text>
+    <text
+       x="28"
+       y="108"
+       font-size="14.5"
+       fill="#475569"
+       font-weight="500"
+       id="text40">
+      Drop the test point into every tree.
+    </text>
+    <text
+       x="28"
+       y="128"
+       font-size="14.5"
+       fill="#475569"
+       font-weight="500"
+       id="text41">
+      Each tree routes it to one specific leaf.
+    </text>
+    <!-- x_test label -->
+    <g
+       transform="translate(180, 158)"
+       id="g42">
+      <rect
+         x="0"
+         y="0"
+         width="90"
+         height="34"
+         rx="17"
+         fill="#ffffff"
+         stroke="#059669"
+         stroke-width="1.6"
+         id="rect41" />
+      <text
+         x="45"
+         y="22"
+         text-anchor="middle"
+         font-size="18"
+         font-weight="700"
+         fill="#059669"
+         font-style="italic"
+         id="text42">
+        x<tspan
+   baseline-shift="sub"
+   font-size="11"
+   id="tspan41">test</tspan></text>
+    </g>
+    <!-- routing arrows from x_test to trees -->
+    <path
+       d="m 200,196 c -46.66667,12.66667 -83.08427,23.62741 -116.417603,40.29407"
+       stroke="#94a3b8"
+       stroke-width="1.5"
+       fill="none"
+       marker-end="url(#arrowSlate)"
+       id="path42"
+       sodipodi:nodetypes="cc" />
+    <path
+       d="m 225,196 v 40.54113"
+       stroke="#94a3b8"
+       stroke-width="1.5"
+       fill="none"
+       marker-end="url(#arrowSlate)"
+       id="path43"
+       sodipodi:nodetypes="cc" />
+    <path
+       d="m 250,196 c 46.66667,12.66667 80.36459,23.998 120.36459,40.66467"
+       stroke="#94a3b8"
+       stroke-width="1.5"
+       fill="none"
+       marker-end="url(#arrowSlate)"
+       id="path44"
+       sodipodi:nodetypes="cc" />
+    <!-- TREE 1: highlighted path leftmost-leaf (leaf #8) -->
+    <g
+       transform="translate(40, 245)"
+       id="g61">
+      <!-- background panel -->
+      <rect
+         x="-8"
+         y="-6"
+         width="116"
+         height="118"
+         rx="10"
+         fill="#ffffff"
+         stroke="#d1fae5"
+         stroke-width="1.2"
+         id="rect44" />
+      <!-- tree edges -->
+      <line
+         x1="50"
+         y1="12"
+         x2="28"
+         y2="42"
+         stroke="#cbd5e1"
+         stroke-width="1.6"
+         id="line44" />
+      <line
+         x1="50"
+         y1="12"
+         x2="72"
+         y2="42"
+         stroke="#cbd5e1"
+         stroke-width="1.6"
+         id="line45" />
+      <line
+         x1="28"
+         y1="42"
+         x2="14"
+         y2="74"
+         stroke="#cbd5e1"
+         stroke-width="1.6"
+         id="line46" />
+      <line
+         x1="28"
+         y1="42"
+         x2="42"
+         y2="74"
+         stroke="#cbd5e1"
+         stroke-width="1.6"
+         id="line47" />
+      <line
+         x1="72"
+         y1="42"
+         x2="58"
+         y2="74"
+         stroke="#cbd5e1"
+         stroke-width="1.6"
+         id="line48" />
+      <line
+         x1="72"
+         y1="42"
+         x2="86"
+         y2="74"
+         stroke="#cbd5e1"
+         stroke-width="1.6"
+         id="line49" />
+      <!-- highlighted edges (root -> left -> leftmost leaf) -->
+      <line
+         x1="50"
+         y1="12"
+         x2="28"
+         y2="42"
+         stroke="#10b981"
+         stroke-width="3.2"
+         stroke-linecap="round"
+         id="line50" />
+      <line
+         x1="28"
+         y1="42"
+         x2="14"
+         y2="74"
+         stroke="#10b981"
+         stroke-width="3.2"
+         stroke-linecap="round"
+         id="line51" />
+      <!-- nodes -->
+      <circle
+         cx="50"
+         cy="12"
+         r="6.5"
+         fill="#94a3b8"
+         id="circle51" />
+      <circle
+         cx="28"
+         cy="42"
+         r="6.5"
+         fill="#94a3b8"
+         id="circle52" />
+      <circle
+         cx="72"
+         cy="42"
+         r="6.5"
+         fill="#94a3b8"
+         id="circle53" />
+      <circle
+         cx="14"
+         cy="74"
+         r="6.5"
+         fill="#93c5fd"
+         id="circle54" />
+      <circle
+         cx="42"
+         cy="74"
+         r="6.5"
+         fill="#fdba74"
+         id="circle55" />
+      <circle
+         cx="58"
+         cy="74"
+         r="6.5"
+         fill="#93c5fd"
+         id="circle56" />
+      <circle
+         cx="86"
+         cy="74"
+         r="6.5"
+         fill="#fdba74"
+         id="circle57" />
+      <!-- highlight on path nodes -->
+      <circle
+         cx="50"
+         cy="12"
+         r="6.5"
+         fill="none"
+         stroke="#10b981"
+         stroke-width="2.5"
+         id="circle58" />
+      <circle
+         cx="28"
+         cy="42"
+         r="6.5"
+         fill="none"
+         stroke="#10b981"
+         stroke-width="2.5"
+         id="circle59" />
+      <circle
+         cx="14"
+         cy="74"
+         r="9"
+         fill="none"
+         stroke="#10b981"
+         stroke-width="2.5"
+         filter="url(#leafGlow)"
+         id="circle60" />
+      <!-- leaf label badge -->
+      <g
+         transform="translate(-2, 88)"
+         id="g60">
+        <rect
+           x="0"
+           y="0"
+           width="34"
+           height="18"
+           rx="9"
+           fill="#10b981"
+           id="rect60" />
+        <text
+           x="17"
+           y="13"
+           text-anchor="middle"
+           font-size="11"
+           font-weight="700"
+           fill="#ffffff"
+           id="text60">#8</text>
+      </g>
+      <!-- tree title -->
+      <text
+         x="47.028545"
+         y="122.88959"
+         text-anchor="middle"
+         font-size="11.5px"
+         font-weight="700"
+         fill="#0f172a"
+         id="text61">Tree 1</text>
+    </g>
+    <!-- TREE 2: highlighted leaf #7 (one of the right leaves) -->
+    <g
+       transform="translate(170, 245)"
+       id="g78">
+      <rect
+         x="-8"
+         y="-6"
+         width="116"
+         height="118"
+         rx="10"
+         fill="#ffffff"
+         stroke="#d1fae5"
+         stroke-width="1.2"
+         id="rect61" />
+      <line
+         x1="50"
+         y1="12"
+         x2="28"
+         y2="42"
+         stroke="#cbd5e1"
+         stroke-width="1.6"
+         id="line61" />
+      <line
+         x1="50"
+         y1="12"
+         x2="72"
+         y2="42"
+         stroke="#cbd5e1"
+         stroke-width="1.6"
+         id="line62" />
+      <line
+         x1="28"
+         y1="42"
+         x2="14"
+         y2="74"
+         stroke="#cbd5e1"
+         stroke-width="1.6"
+         id="line63" />
+      <line
+         x1="28"
+         y1="42"
+         x2="42"
+         y2="74"
+         stroke="#cbd5e1"
+         stroke-width="1.6"
+         id="line64" />
+      <line
+         x1="72"
+         y1="42"
+         x2="58"
+         y2="74"
+         stroke="#cbd5e1"
+         stroke-width="1.6"
+         id="line65" />
+      <line
+         x1="72"
+         y1="42"
+         x2="86"
+         y2="74"
+         stroke="#cbd5e1"
+         stroke-width="1.6"
+         id="line66" />
+      <!-- highlighted: root -> right -> right-left leaf (58,74) -->
+      <line
+         x1="50"
+         y1="12"
+         x2="72"
+         y2="42"
+         stroke="#10b981"
+         stroke-width="3.2"
+         stroke-linecap="round"
+         id="line67" />
+      <line
+         x1="72"
+         y1="42"
+         x2="58"
+         y2="74"
+         stroke="#10b981"
+         stroke-width="3.2"
+         stroke-linecap="round"
+         id="line68" />
+      <circle
+         cx="50"
+         cy="12"
+         r="6.5"
+         fill="#94a3b8"
+         id="circle68" />
+      <circle
+         cx="28"
+         cy="42"
+         r="6.5"
+         fill="#94a3b8"
+         id="circle69" />
+      <circle
+         cx="72"
+         cy="42"
+         r="6.5"
+         fill="#94a3b8"
+         id="circle70" />
+      <circle
+         cx="14"
+         cy="74"
+         r="6.5"
+         fill="#93c5fd"
+         id="circle71" />
+      <circle
+         cx="42"
+         cy="74"
+         r="6.5"
+         fill="#fdba74"
+         id="circle72" />
+      <circle
+         cx="58"
+         cy="74"
+         r="6.5"
+         fill="#93c5fd"
+         id="circle73" />
+      <circle
+         cx="86"
+         cy="74"
+         r="6.5"
+         fill="#fdba74"
+         id="circle74" />
+      <circle
+         cx="50"
+         cy="12"
+         r="6.5"
+         fill="none"
+         stroke="#10b981"
+         stroke-width="2.5"
+         id="circle75" />
+      <circle
+         cx="72"
+         cy="42"
+         r="6.5"
+         fill="none"
+         stroke="#10b981"
+         stroke-width="2.5"
+         id="circle76" />
+      <circle
+         cx="58"
+         cy="74"
+         r="9"
+         fill="none"
+         stroke="#10b981"
+         stroke-width="2.5"
+         filter="url(#leafGlow)"
+         id="circle77" />
+      <g
+         transform="translate(42, 88)"
+         id="g77">
+        <rect
+           x="0"
+           y="0"
+           width="34"
+           height="18"
+           rx="9"
+           fill="#10b981"
+           id="rect77" />
+        <text
+           x="17"
+           y="13"
+           text-anchor="middle"
+           font-size="11"
+           font-weight="700"
+           fill="#ffffff"
+           id="text77">#7</text>
+      </g>
+      <text
+         x="52.374168"
+         y="123.26018"
+         text-anchor="middle"
+         font-size="11.5px"
+         font-weight="700"
+         fill="#0f172a"
+         id="text78">Tree 2</text>
+    </g>
+    <!-- ellipsis -->
+    <text
+       x="320"
+       y="305"
+       text-anchor="middle"
+       font-size="22"
+       font-weight="700"
+       fill="#94a3b8"
+       id="text79">…</text>
+    <!-- TREE N: highlighted leaf #6 -->
+    <g
+       transform="translate(340, 245)"
+       id="g96">
+      <rect
+         x="-8"
+         y="-6"
+         width="116"
+         height="118"
+         rx="10"
+         fill="#ffffff"
+         stroke="#d1fae5"
+         stroke-width="1.2"
+         id="rect79" />
+      <line
+         x1="50"
+         y1="12"
+         x2="28"
+         y2="42"
+         stroke="#cbd5e1"
+         stroke-width="1.6"
+         id="line79" />
+      <line
+         x1="50"
+         y1="12"
+         x2="72"
+         y2="42"
+         stroke="#cbd5e1"
+         stroke-width="1.6"
+         id="line80" />
+      <line
+         x1="28"
+         y1="42"
+         x2="14"
+         y2="74"
+         stroke="#cbd5e1"
+         stroke-width="1.6"
+         id="line81" />
+      <line
+         x1="28"
+         y1="42"
+         x2="42"
+         y2="74"
+         stroke="#cbd5e1"
+         stroke-width="1.6"
+         id="line82" />
+      <line
+         x1="72"
+         y1="42"
+         x2="58"
+         y2="74"
+         stroke="#cbd5e1"
+         stroke-width="1.6"
+         id="line83" />
+      <line
+         x1="72"
+         y1="42"
+         x2="86"
+         y2="74"
+         stroke="#cbd5e1"
+         stroke-width="1.6"
+         id="line84" />
+      <!-- highlight: root -> left -> right inner leaf (42,74) -->
+      <line
+         x1="50"
+         y1="12"
+         x2="28"
+         y2="42"
+         stroke="#10b981"
+         stroke-width="3.2"
+         stroke-linecap="round"
+         id="line85" />
+      <line
+         x1="28"
+         y1="42"
+         x2="42"
+         y2="74"
+         stroke="#10b981"
+         stroke-width="3.2"
+         stroke-linecap="round"
+         id="line86" />
+      <circle
+         cx="50"
+         cy="12"
+         r="6.5"
+         fill="#94a3b8"
+         id="circle86" />
+      <circle
+         cx="28"
+         cy="42"
+         r="6.5"
+         fill="#94a3b8"
+         id="circle87" />
+      <circle
+         cx="72"
+         cy="42"
+         r="6.5"
+         fill="#94a3b8"
+         id="circle88" />
+      <circle
+         cx="14"
+         cy="74"
+         r="6.5"
+         fill="#93c5fd"
+         id="circle89" />
+      <circle
+         cx="42"
+         cy="74"
+         r="6.5"
+         fill="#fdba74"
+         id="circle90" />
+      <circle
+         cx="58"
+         cy="74"
+         r="6.5"
+         fill="#93c5fd"
+         id="circle91" />
+      <circle
+         cx="86"
+         cy="74"
+         r="6.5"
+         fill="#fdba74"
+         id="circle92" />
+      <circle
+         cx="50"
+         cy="12"
+         r="6.5"
+         fill="none"
+         stroke="#10b981"
+         stroke-width="2.5"
+         id="circle93" />
+      <circle
+         cx="28"
+         cy="42"
+         r="6.5"
+         fill="none"
+         stroke="#10b981"
+         stroke-width="2.5"
+         id="circle94" />
+      <circle
+         cx="42"
+         cy="74"
+         r="9"
+         fill="none"
+         stroke="#10b981"
+         stroke-width="2.5"
+         filter="url(#leafGlow)"
+         id="circle95" />
+      <g
+         transform="translate(26, 88)"
+         id="g95">
+        <rect
+           x="0"
+           y="0"
+           width="34"
+           height="18"
+           rx="9"
+           fill="#10b981"
+           id="rect95" />
+        <text
+           x="17"
+           y="13"
+           text-anchor="middle"
+           font-size="11"
+           font-weight="700"
+           fill="#ffffff"
+           id="text95">#6</text>
+      </g>
+      <text
+         x="49.602325"
+         y="123.24329"
+         text-anchor="middle"
+         font-size="11.5px"
+         font-weight="700"
+         fill="#0f172a"
+         id="text96">Tree N</text>
+    </g>
+    <!-- arrow down -->
+    <path
+       d="M 225 388 L 225 422"
+       stroke="#059669"
+       stroke-width="2"
+       fill="none"
+       marker-end="url(#arrowGreen)"
+       id="path96" />
+    <text
+       x="245"
+       y="412"
+       font-size="12"
+       font-weight="600"
+       fill="#059669"
+       font-style="italic"
+       id="text97">collect leaf indices</text>
+    <!-- leaf-index vector card -->
+    <g
+       transform="translate(40, 440)"
+       id="g106">
+      <rect
+         x="0"
+         y="0"
+         width="370"
+         height="74"
+         rx="14"
+         fill="#ecfdf5"
+         stroke="#10b981"
+         stroke-width="2"
+         id="rect97" />
+      <!-- 4 cells: Tree 1 | Tree 2 | … | Tree N -->
+      <text
+         x="50"
+         y="22"
+         text-anchor="middle"
+         font-size="11"
+         font-weight="700"
+         fill="#047857"
+         letter-spacing="0.5"
+         id="text98">TREE 1</text>
+      <text
+         x="140"
+         y="22"
+         text-anchor="middle"
+         font-size="11"
+         font-weight="700"
+         fill="#047857"
+         letter-spacing="0.5"
+         id="text99">TREE 2</text>
+      <text
+         x="230"
+         y="22"
+         text-anchor="middle"
+         font-size="11"
+         font-weight="700"
+         fill="#047857"
+         letter-spacing="0.5"
+         id="text100">…</text>
+      <text
+         x="320"
+         y="22"
+         text-anchor="middle"
+         font-size="11"
+         font-weight="700"
+         fill="#047857"
+         letter-spacing="0.5"
+         id="text101">TREE N</text>
+      <line
+         x1="95"
+         y1="32"
+         x2="95"
+         y2="64"
+         stroke="#a7f3d0"
+         stroke-width="1"
+         id="line101" />
+      <line
+         x1="185"
+         y1="32"
+         x2="185"
+         y2="64"
+         stroke="#a7f3d0"
+         stroke-width="1"
+         id="line102" />
+      <line
+         x1="275"
+         y1="32"
+         x2="275"
+         y2="64"
+         stroke="#a7f3d0"
+         stroke-width="1"
+         id="line103" />
+      <text
+         x="50"
+         y="56"
+         text-anchor="middle"
+         font-size="22"
+         font-weight="800"
+         fill="#059669"
+         id="text103">8</text>
+      <text
+         x="140"
+         y="56"
+         text-anchor="middle"
+         font-size="22"
+         font-weight="800"
+         fill="#059669"
+         id="text104">7</text>
+      <text
+         x="230"
+         y="56"
+         text-anchor="middle"
+         font-size="22"
+         font-weight="800"
+         fill="#94a3b8"
+         id="text105">…</text>
+      <text
+         x="320"
+         y="56"
+         text-anchor="middle"
+         font-size="22"
+         font-weight="800"
+         fill="#059669"
+         id="text106">6</text>
+    </g>
+    <!-- vector label -->
+    <g
+       transform="translate(120, 535)"
+       id="g107">
+      <rect
+         x="0"
+         y="0"
+         width="210"
+         height="32"
+         rx="16"
+         fill="#ffffff"
+         stroke="#10b981"
+         stroke-width="1.5"
+         id="rect106" />
+      <text
+         x="105"
+         y="21"
+         text-anchor="middle"
+         font-size="14"
+         font-weight="700"
+         fill="#059669"
+         id="text107">leaf-index vector v<tspan
+   baseline-shift="sub"
+   font-size="9"
+   id="tspan106">test</tspan></text>
+    </g>
+    <!-- caption -->
+    <text
+       x="28"
+       y="600"
+       font-size="13"
+       fill="#64748b"
+       id="text110"><tspan
+         x="28"
+         dy="0"
+         id="tspan107">Stacked together, the leaf indices form a</tspan><tspan
+         x="28"
+         dy="18"
+         id="tspan108">fingerprint of how the ensemble routes x</tspan><tspan
+         font-size="9"
+         baseline-shift="sub"
+         id="tspan109">test</tspan><tspan
+         id="tspan110">.</tspan></text>
+  </g>
+  <!-- chevron between cards 1 and 2 -->
+  <g
+     transform="translate(498, 540)"
+     id="g111">
+    <circle
+       cx="17"
+       cy="20"
+       r="20"
+       fill="#ffffff"
+       stroke="#e2e8f0"
+       stroke-width="1.2"
+       filter="url(#softShadow)"
+       id="circle110" />
+    <path
+       d="M 11 12 L 21 20 L 11 28"
+       stroke="#6366f1"
+       stroke-width="2.6"
+       fill="none"
+       stroke-linecap="round"
+       stroke-linejoin="round"
+       id="path110" />
+  </g>
+  <!-- ===== STEP 2: COMPARE ===== -->
+  <g
+     transform="translate(540, 240)"
+     id="g174">
+    <rect
+       width="450"
+       height="640"
+       rx="20"
+       fill="url(#card2Grad)"
+       stroke="#e0e7ff"
+       stroke-width="1.5"
+       filter="url(#cardShadow)"
+       id="rect111" />
+    <g
+       transform="translate(28, 28)"
+       id="g112">
+      <rect
+         width="44"
+         height="44"
+         rx="12"
+         fill="#6366f1"
+         id="rect112" />
+      <text
+         x="22"
+         y="31"
+         text-anchor="middle"
+         font-size="22"
+         font-weight="800"
+         fill="#ffffff"
+         id="text112">2</text>
+    </g>
+    <text
+       x="86"
+       y="48"
+       font-size="13"
+       font-weight="700"
+       fill="#6366f1"
+       letter-spacing="2"
+       id="text113">STEP TWO</text>
+    <text
+       x="86"
+       y="72"
+       font-size="24"
+       font-weight="800"
+       fill="#312e81"
+       id="text114">Compare</text>
+    <text
+       x="28"
+       y="108"
+       font-size="14.5"
+       fill="#475569"
+       font-weight="500"
+       id="text115">Encode every training point the same way.</text>
+    <text
+       x="28"
+       y="128"
+       font-size="14.5"
+       fill="#475569"
+       font-weight="500"
+       id="text116">Count how many leaves each one shares with v<tspan
+   font-size="10"
+   baseline-shift="sub"
+   id="tspan115">test</tspan>.</text>
+    <!-- v_test pill at top of compare zone -->
+    <g
+       transform="translate(70, 156)"
+       id="g123">
+      <rect
+         x="0"
+         y="0"
+         width="310"
+         height="42"
+         rx="10"
+         fill="#ecfdf5"
+         stroke="#10b981"
+         stroke-width="1.8"
+         id="rect116" />
+      <text
+         x="14"
+         y="27"
+         font-size="12"
+         font-weight="700"
+         fill="#047857"
+         id="text117">v<tspan
+   baseline-shift="sub"
+   font-size="9"
+   id="tspan116">test</tspan></text>
+      <text
+         x="68"
+         y="28"
+         text-anchor="middle"
+         font-size="17"
+         font-weight="800"
+         fill="#059669"
+         id="text118">8</text>
+      <text
+         x="142"
+         y="28"
+         text-anchor="middle"
+         font-size="17"
+         font-weight="800"
+         fill="#059669"
+         id="text119">7</text>
+      <text
+         x="216"
+         y="28"
+         text-anchor="middle"
+         font-size="17"
+         font-weight="800"
+         fill="#94a3b8"
+         id="text120">…</text>
+      <text
+         x="290"
+         y="28"
+         text-anchor="middle"
+         font-size="17"
+         font-weight="800"
+         fill="#059669"
+         id="text121">6</text>
+      <line
+         x1="105"
+         y1="8"
+         x2="105"
+         y2="34"
+         stroke="#a7f3d0"
+         stroke-width="1"
+         id="line121" />
+      <line
+         x1="180"
+         y1="8"
+         x2="180"
+         y2="34"
+         stroke="#a7f3d0"
+         stroke-width="1"
+         id="line122" />
+      <line
+         x1="253"
+         y1="8"
+         x2="253"
+         y2="34"
+         stroke="#a7f3d0"
+         stroke-width="1"
+         id="line123" />
+    </g>
+    <!-- compare arrows down to matrix -->
+    <text
+       x="225"
+       y="220"
+       text-anchor="middle"
+       font-size="12"
+       font-weight="700"
+       fill="#6366f1"
+       font-style="italic"
+       id="text123">match leaf-by-leaf</text>
+    <path
+       d="M 130 226 L 130 250"
+       stroke="#6366f1"
+       stroke-width="1.6"
+       fill="none"
+       marker-end="url(#arrowIndigo)"
+       stroke-dasharray="3,3"
+       id="path123" />
+    <path
+       d="M 200 226 L 200 250"
+       stroke="#6366f1"
+       stroke-width="1.6"
+       fill="none"
+       marker-end="url(#arrowIndigo)"
+       stroke-dasharray="3,3"
+       id="path124" />
+    <path
+       d="M 268 226 L 268 250"
+       stroke="#6366f1"
+       stroke-width="1.6"
+       fill="none"
+       marker-end="url(#arrowIndigo)"
+       stroke-dasharray="3,3"
+       id="path125" />
+    <path
+       d="M 340 226 L 340 250"
+       stroke="#6366f1"
+       stroke-width="1.6"
+       fill="none"
+       marker-end="url(#arrowIndigo)"
+       stroke-dasharray="3,3"
+       id="path126" />
+    <!-- Training matrix -->
+    <g
+       transform="translate(28, 260)"
+       id="g165">
+      <!-- header -->
+      <rect
+         x="0"
+         y="0"
+         width="394"
+         height="32"
+         rx="6"
+         fill="#eef2ff"
+         id="rect126" />
+      <text
+         x="36"
+         y="21"
+         text-anchor="middle"
+         font-size="11"
+         font-weight="700"
+         fill="#4338ca"
+         letter-spacing="0.5"
+         id="text126">x</text>
+      <text
+         x="100"
+         y="21"
+         text-anchor="middle"
+         font-size="11"
+         font-weight="700"
+         fill="#4338ca"
+         letter-spacing="0.5"
+         id="text127">TREE 1</text>
+      <text
+         x="172"
+         y="21"
+         text-anchor="middle"
+         font-size="11"
+         font-weight="700"
+         fill="#4338ca"
+         letter-spacing="0.5"
+         id="text128">TREE 2</text>
+      <text
+         x="240"
+         y="21"
+         text-anchor="middle"
+         font-size="11"
+         font-weight="700"
+         fill="#4338ca"
+         letter-spacing="0.5"
+         id="text129">…</text>
+      <text
+         x="312"
+         y="21"
+         text-anchor="middle"
+         font-size="11"
+         font-weight="700"
+         fill="#4338ca"
+         letter-spacing="0.5"
+         id="text130">TREE N</text>
+      <text
+         x="370"
+         y="21"
+         text-anchor="middle"
+         font-size="11"
+         font-weight="700"
+         fill="#4338ca"
+         letter-spacing="0.5"
+         id="text131">SIM</text>
+      <!-- separator -->
+      <line
+         x1="68"
+         y1="0"
+         x2="68"
+         y2="246"
+         stroke="#e0e7ff"
+         stroke-width="1"
+         id="line131" />
+      <line
+         x1="340"
+         y1="0"
+         x2="340"
+         y2="246"
+         stroke="#e0e7ff"
+         stroke-width="1"
+         id="line132" />
+      <!-- row x_1: 8, 7, ..., 6 -> all match -> 1.00 -->
+      <rect
+         x="0"
+         y="36"
+         width="394"
+         height="36"
+         rx="4"
+         fill="#dcfce7"
+         opacity="0.55"
+         id="rect132" />
+      <text
+         x="36"
+         y="59"
+         text-anchor="middle"
+         font-size="14"
+         font-weight="700"
+         fill="#1e293b"
+         font-style="italic"
+         id="text132">x<tspan
+   baseline-shift="sub"
+   font-size="9"
+   id="tspan132">1</tspan></text>
+      <text
+         x="100"
+         y="59"
+         text-anchor="middle"
+         font-size="15"
+         font-weight="700"
+         fill="#059669"
+         id="text133">8</text>
+      <text
+         x="172"
+         y="59"
+         text-anchor="middle"
+         font-size="15"
+         font-weight="700"
+         fill="#059669"
+         id="text134">7</text>
+      <text
+         x="240"
+         y="59"
+         text-anchor="middle"
+         font-size="15"
+         font-weight="700"
+         fill="#94a3b8"
+         id="text135">…</text>
+      <text
+         x="312"
+         y="59"
+         text-anchor="middle"
+         font-size="15"
+         font-weight="700"
+         fill="#059669"
+         id="text136">6</text>
+      <text
+         x="370"
+         y="59"
+         text-anchor="middle"
+         font-size="13"
+         font-weight="800"
+         fill="#059669"
+         id="text137">1.00</text>
+      <!-- row x_2: 4, 2, ..., 3 -> none match -> 0.10 -->
+      <text
+         x="36"
+         y="93"
+         text-anchor="middle"
+         font-size="14"
+         font-weight="700"
+         fill="#1e293b"
+         font-style="italic"
+         id="text138">x<tspan
+   baseline-shift="sub"
+   font-size="9"
+   id="tspan137">2</tspan></text>
+      <text
+         x="100"
+         y="93"
+         text-anchor="middle"
+         font-size="15"
+         font-weight="600"
+         fill="#475569"
+         id="text139">4</text>
+      <text
+         x="172"
+         y="93"
+         text-anchor="middle"
+         font-size="15"
+         font-weight="600"
+         fill="#475569"
+         id="text140">2</text>
+      <text
+         x="240"
+         y="93"
+         text-anchor="middle"
+         font-size="15"
+         font-weight="600"
+         fill="#94a3b8"
+         id="text141">…</text>
+      <text
+         x="312"
+         y="93"
+         text-anchor="middle"
+         font-size="15"
+         font-weight="600"
+         fill="#475569"
+         id="text142">3</text>
+      <text
+         x="370"
+         y="93"
+         text-anchor="middle"
+         font-size="13"
+         font-weight="800"
+         fill="#94a3b8"
+         id="text143">0.10</text>
+      <!-- row x_3: 8, 7, ..., 1 -> 2 of 3 match -> 0.67 -->
+      <rect
+         x="0"
+         y="108"
+         width="394"
+         height="36"
+         rx="4"
+         fill="#fef3c7"
+         opacity="0.45"
+         id="rect143" />
+      <text
+         x="36"
+         y="131"
+         text-anchor="middle"
+         font-size="14"
+         font-weight="700"
+         fill="#1e293b"
+         font-style="italic"
+         id="text144">x<tspan
+   baseline-shift="sub"
+   font-size="9"
+   id="tspan143">3</tspan></text>
+      <text
+         x="100"
+         y="131"
+         text-anchor="middle"
+         font-size="15"
+         font-weight="700"
+         fill="#059669"
+         id="text145">8</text>
+      <text
+         x="172"
+         y="131"
+         text-anchor="middle"
+         font-size="15"
+         font-weight="700"
+         fill="#059669"
+         id="text146">7</text>
+      <text
+         x="240"
+         y="131"
+         text-anchor="middle"
+         font-size="15"
+         font-weight="600"
+         fill="#94a3b8"
+         id="text147">…</text>
+      <text
+         x="312"
+         y="131"
+         text-anchor="middle"
+         font-size="15"
+         font-weight="600"
+         fill="#475569"
+         id="text148">1</text>
+      <text
+         x="370"
+         y="131"
+         text-anchor="middle"
+         font-size="13"
+         font-weight="800"
+         fill="#d97706"
+         id="text149">0.67</text>
+      <!-- ellipsis row -->
+      <text
+         x="36"
+         y="167"
+         text-anchor="middle"
+         font-size="14"
+         fill="#94a3b8"
+         id="text150">⋮</text>
+      <text
+         x="100"
+         y="167"
+         text-anchor="middle"
+         font-size="14"
+         fill="#94a3b8"
+         id="text151">⋮</text>
+      <text
+         x="172"
+         y="167"
+         text-anchor="middle"
+         font-size="14"
+         fill="#94a3b8"
+         id="text152">⋮</text>
+      <text
+         x="240"
+         y="167"
+         text-anchor="middle"
+         font-size="14"
+         fill="#94a3b8"
+         id="text153">⋮</text>
+      <text
+         x="312"
+         y="167"
+         text-anchor="middle"
+         font-size="14"
+         fill="#94a3b8"
+         id="text154">⋮</text>
+      <text
+         x="370"
+         y="167"
+         text-anchor="middle"
+         font-size="14"
+         fill="#94a3b8"
+         id="text155">⋮</text>
+      <!-- row x_M -->
+      <text
+         x="36"
+         y="201"
+         text-anchor="middle"
+         font-size="14"
+         font-weight="700"
+         fill="#1e293b"
+         font-style="italic"
+         id="text156">x<tspan
+   baseline-shift="sub"
+   font-size="9"
+   id="tspan155">M</tspan></text>
+      <text
+         x="100"
+         y="201"
+         text-anchor="middle"
+         font-size="15"
+         font-weight="600"
+         fill="#475569"
+         id="text157">2</text>
+      <text
+         x="172"
+         y="201"
+         text-anchor="middle"
+         font-size="15"
+         font-weight="600"
+         fill="#475569"
+         id="text158">8</text>
+      <text
+         x="240"
+         y="201"
+         text-anchor="middle"
+         font-size="15"
+         font-weight="600"
+         fill="#94a3b8"
+         id="text159">…</text>
+      <text
+         x="312"
+         y="201"
+         text-anchor="middle"
+         font-size="15"
+         font-weight="600"
+         fill="#475569"
+         id="text160">1</text>
+      <text
+         x="370"
+         y="201"
+         text-anchor="middle"
+         font-size="13"
+         font-weight="800"
+         fill="#94a3b8"
+         id="text161">0.05</text>
+      <!-- row separators -->
+      <line
+         x1="0"
+         y1="36"
+         x2="394"
+         y2="36"
+         stroke="#e0e7ff"
+         stroke-width="1"
+         id="line161" />
+      <line
+         x1="0"
+         y1="72"
+         x2="394"
+         y2="72"
+         stroke="#e0e7ff"
+         stroke-width="1"
+         id="line162" />
+      <line
+         x1="0"
+         y1="108"
+         x2="394"
+         y2="108"
+         stroke="#e0e7ff"
+         stroke-width="1"
+         id="line163" />
+      <line
+         x1="0"
+         y1="144"
+         x2="394"
+         y2="144"
+         stroke="#e0e7ff"
+         stroke-width="1"
+         id="line164" />
+      <line
+         x1="0"
+         y1="182"
+         x2="394"
+         y2="182"
+         stroke="#e0e7ff"
+         stroke-width="1"
+         id="line165" />
+    </g>
+    <!-- formula box -->
+    <g
+       transform="translate(28, 510)"
+       id="g168">
+      <rect
+         x="0"
+         y="0"
+         width="394"
+         height="60"
+         rx="10"
+         fill="#ffffff"
+         stroke="#e0e7ff"
+         stroke-width="1.4"
+         id="rect165" />
+      <text
+         x="141.83405"
+         y="14"
+         font-size="11px"
+         font-weight="700"
+         fill="#6366f1"
+         letter-spacing="1.5"
+         id="text165">SIMILARITY</text>
+      <text
+         x="14"
+         y="33.894173"
+         font-size="14px"
+         fill="#1e293b"
+         id="text168"><tspan
+           sodipodi:role="line"
+           id="tspan207"
+           x="14"
+           y="33.894173">sim(x<tspan
+   font-size="9px"
+   baseline-shift="sub"
+   id="tspan165">test</tspan>, x<tspan
+   font-size="9px"
+   baseline-shift="sub"
+   id="tspan166">i</tspan>) <tspan
+   font-weight="700"
+   id="tspan167">=</tspan><tspan
+   font-style="italic"
+   id="tspan168">fraction of trees that route both points</tspan></tspan><tspan
+           sodipodi:role="line"
+           id="tspan208"
+           x="14"
+           y="51.394173"><tspan
+             font-style="italic"
+             id="tspan209">to the same leaf</tspan></tspan></text>
+    </g>
+    <!-- caption -->
+    <text
+       x="28"
+       y="600"
+       font-size="13px"
+       fill="#64748b"
+       id="text174"><tspan
+         x="28"
+         dy="0"
+         id="tspan169">A high score means the ensemble treats x </tspan><tspan
+         font-size="9px"
+         baseline-shift="sub"
+         id="tspan170">i</tspan><tspan
+         id="tspan171">like x</tspan><tspan
+         font-size="9px"
+         baseline-shift="sub"
+         id="tspan172">test</tspan><tspan
+         id="tspan173">—</tspan><tspan
+         x="28"
+         dy="18"
+         id="tspan174">they share the same regions of the learned feature space.</tspan></text>
+  </g>
+  <!-- chevron between cards 2 and 3 -->
+  <g
+     transform="translate(998, 540)"
+     id="g175">
+    <circle
+       cx="17"
+       cy="20"
+       r="20"
+       fill="#ffffff"
+       stroke="#e2e8f0"
+       stroke-width="1.2"
+       filter="url(#softShadow)"
+       id="circle174" />
+    <path
+       d="M 11 12 L 21 20 L 11 28"
+       stroke="#d97706"
+       stroke-width="2.6"
+       fill="none"
+       stroke-linecap="round"
+       stroke-linejoin="round"
+       id="path174" />
+  </g>
+  <!-- ===== STEP 3: EXPLAIN ===== -->
+  <g
+     transform="translate(1040, 240)"
+     id="g202">
+    <rect
+       width="420"
+       height="640"
+       rx="20"
+       fill="url(#card3Grad)"
+       stroke="#fed7aa"
+       stroke-width="1.5"
+       filter="url(#cardShadow)"
+       id="rect175" />
+    <g
+       transform="translate(28, 28)"
+       id="g176">
+      <rect
+         width="44"
+         height="44"
+         rx="12"
+         fill="#d97706"
+         id="rect176" />
+      <text
+         x="22"
+         y="31"
+         text-anchor="middle"
+         font-size="22"
+         font-weight="800"
+         fill="#ffffff"
+         id="text176">3</text>
+    </g>
+    <text
+       x="86"
+       y="48"
+       font-size="13"
+       font-weight="700"
+       fill="#d97706"
+       letter-spacing="2"
+       id="text177">STEP THREE</text>
+    <text
+       x="86"
+       y="72"
+       font-size="24"
+       font-weight="800"
+       fill="#7c2d12"
+       id="text178">Explain</text>
+    <text
+       x="28"
+       y="108"
+       font-size="14.5"
+       fill="#475569"
+       font-weight="500"
+       id="text179">Return the top-K most similar training</text>
+    <text
+       x="28"
+       y="128"
+       font-size="14.5"
+       fill="#475569"
+       font-weight="500"
+       id="text180">points. They are the model’s evidence.</text>
+    <!-- top-K title -->
+    <g
+       transform="translate(28, 156)"
+       id="g182">
+      <rect
+         x="0"
+         y="0"
+         width="364"
+         height="32"
+         rx="8"
+         fill="#fff7ed"
+         stroke="#fed7aa"
+         stroke-width="1.4"
+         id="rect180" />
+      <text
+         x="14"
+         y="21"
+         font-size="12"
+         font-weight="700"
+         fill="#9a3412"
+         letter-spacing="1.5"
+         id="text181">TOP-K NEIGHBOURS OF x<tspan
+   font-size="9"
+   baseline-shift="sub"
+   id="tspan180">test</tspan></text>
+      <text
+         x="350"
+         y="21"
+         text-anchor="end"
+         font-size="12"
+         font-weight="700"
+         fill="#9a3412"
+         id="text182">SIM</text>
+    </g>
+    <!-- ranked bars -->
+    <g
+       transform="translate(28, 200)"
+       font-size="13"
+       font-weight="700"
+       id="g196">
+      <!-- entry 1 -->
+      <text
+         x="0"
+         y="14"
+         font-style="italic"
+         fill="#1e293b"
+         id="text183">x<tspan
+   baseline-shift="sub"
+   font-size="9"
+   id="tspan182">1</tspan></text>
+      <rect
+         x="36"
+         y="2"
+         width="280"
+         height="16"
+         rx="4"
+         fill="#fff1e0"
+         id="rect183" />
+      <rect
+         x="36"
+         y="2"
+         width="280"
+         height="16"
+         rx="4"
+         fill="url(#barGrad)"
+         id="rect184" />
+      <text
+         x="356"
+         y="14"
+         text-anchor="end"
+         fill="#9a3412"
+         id="text184">1.00</text>
+      <!-- entry 2 -->
+      <text
+         x="0"
+         y="44"
+         font-style="italic"
+         fill="#1e293b"
+         id="text185">x<tspan
+   baseline-shift="sub"
+   font-size="9"
+   id="tspan184">3</tspan></text>
+      <rect
+         x="36"
+         y="32"
+         width="280"
+         height="16"
+         rx="4"
+         fill="#fff1e0"
+         id="rect185" />
+      <rect
+         x="36"
+         y="32"
+         width="188"
+         height="16"
+         rx="4"
+         fill="url(#barGrad)"
+         id="rect186" />
+      <text
+         x="356"
+         y="44"
+         text-anchor="end"
+         fill="#9a3412"
+         id="text186">0.67</text>
+      <!-- entry 3 -->
+      <text
+         x="0"
+         y="74"
+         font-style="italic"
+         fill="#1e293b"
+         id="text187">x<tspan
+   baseline-shift="sub"
+   font-size="9"
+   id="tspan186">47</tspan></text>
+      <rect
+         x="36"
+         y="62"
+         width="280"
+         height="16"
+         rx="4"
+         fill="#fff1e0"
+         id="rect187" />
+      <rect
+         x="36"
+         y="62"
+         width="170"
+         height="16"
+         rx="4"
+         fill="url(#barGrad)"
+         id="rect188" />
+      <text
+         x="356"
+         y="74"
+         text-anchor="end"
+         fill="#9a3412"
+         id="text188">0.61</text>
+      <!-- entry 4 -->
+      <text
+         x="0"
+         y="104"
+         font-style="italic"
+         fill="#1e293b"
+         id="text189">x<tspan
+   baseline-shift="sub"
+   font-size="9"
+   id="tspan188">22</tspan></text>
+      <rect
+         x="36"
+         y="92"
+         width="280"
+         height="16"
+         rx="4"
+         fill="#fff1e0"
+         id="rect189" />
+      <rect
+         x="36"
+         y="92"
+         width="148"
+         height="16"
+         rx="4"
+         fill="url(#barGrad)"
+         id="rect190" />
+      <text
+         x="356"
+         y="104"
+         text-anchor="end"
+         fill="#9a3412"
+         id="text190">0.53</text>
+      <!-- entry 5 -->
+      <text
+         x="0"
+         y="134"
+         font-style="italic"
+         fill="#1e293b"
+         id="text191">x<tspan
+   baseline-shift="sub"
+   font-size="9"
+   id="tspan190">15</tspan></text>
+      <rect
+         x="36"
+         y="122"
+         width="280"
+         height="16"
+         rx="4"
+         fill="#fff1e0"
+         id="rect191" />
+      <rect
+         x="36"
+         y="122"
+         width="124"
+         height="16"
+         rx="4"
+         fill="url(#barGrad)"
+         id="rect192" />
+      <text
+         x="356"
+         y="134"
+         text-anchor="end"
+         fill="#9a3412"
+         id="text192">0.44</text>
+      <!-- entry 6 -->
+      <text
+         x="0"
+         y="164"
+         font-style="italic"
+         fill="#1e293b"
+         id="text193">x<tspan
+   baseline-shift="sub"
+   font-size="9"
+   id="tspan192">8</tspan></text>
+      <rect
+         x="36"
+         y="152"
+         width="280"
+         height="16"
+         rx="4"
+         fill="#fff1e0"
+         id="rect193" />
+      <rect
+         x="36"
+         y="152"
+         width="106"
+         height="16"
+         rx="4"
+         fill="url(#barGrad)"
+         id="rect194" />
+      <text
+         x="356"
+         y="164"
+         text-anchor="end"
+         fill="#9a3412"
+         id="text194">0.38</text>
+      <!-- entry 7 -->
+      <text
+         x="0"
+         y="194"
+         font-style="italic"
+         fill="#1e293b"
+         id="text195">x<tspan
+   baseline-shift="sub"
+   font-size="9"
+   id="tspan194">31</tspan></text>
+      <rect
+         x="36"
+         y="182"
+         width="280"
+         height="16"
+         rx="4"
+         fill="#fff1e0"
+         id="rect195" />
+      <rect
+         x="36"
+         y="182"
+         width="86"
+         height="16"
+         rx="4"
+         fill="url(#barGrad)"
+         id="rect196" />
+      <text
+         x="356"
+         y="194"
+         text-anchor="end"
+         fill="#9a3412"
+         id="text196">0.31</text>
+    </g>
+    <!-- divider -->
+    <line
+       x1="44"
+       y1="430"
+       x2="376"
+       y2="430"
+       stroke="#fed7aa"
+       stroke-width="1.2"
+       stroke-dasharray="3,4"
+       id="line196" />
+    <!-- explanation insight -->
+    <g
+       transform="translate(28, 450)"
+       id="g201">
+      <rect
+         x="0"
+         y="0"
+         width="364"
+         height="120"
+         rx="12"
+         fill="#ffffff"
+         stroke="#fed7aa"
+         stroke-width="1.4"
+         id="rect197" />
+      <g
+         transform="translate(16,14)"
+         id="g197">
+        <circle
+           cx="11"
+           cy="11"
+           r="11"
+           fill="#fef3c7"
+           id="circle197" />
+        <text
+           x="11"
+           y="16"
+           text-anchor="middle"
+           font-size="14px"
+           font-weight="800"
+           fill="#d97706"
+           id="text197">!</text>
+      </g>
+      <text
+         x="50"
+         y="30"
+         font-size="13px"
+         font-weight="700"
+         fill="#9a3412"
+         letter-spacing="0.5"
+         id="text198">HUMAN-READABLE OUTPUT</text>
+      <text
+         x="16"
+         y="60"
+         font-size="13px"
+         fill="#475569"
+         id="text201"
+         style="white-space:pre;inline-size:336.81"
+         xml:space="preserve"><tspan
+           x="16"
+           y="60"
+           id="tspan1">These training points are concrete, </tspan><tspan
+           x="16"
+           y="76.250004"
+           id="tspan2">inspectableexamples a domain expert can read — </tspan><tspan
+           x="16"
+           y="92.500004"
+           id="tspan4">making theprediction <tspan
+   style="font-weight:700;fill:#9a3412"
+   id="tspan3">defensible, debuggable,</tspan>
+</tspan><tspan
+           x="16"
+           y="108.75"
+           id="tspan6"><tspan
+   style="font-weight:700;fill:#9a3412"
+   id="tspan5">and trustworthy</tspan>.</tspan></text>
+    </g>
+  </g>
+  <!-- ============ FOOTER NOTE ============ -->
+  <g
+     transform="translate(80, 920)"
+     id="g205">
+    <rect
+       x="0"
+       y="0"
+       width="1340"
+       height="100"
+       rx="14"
+       fill="#ffffff"
+       stroke="#e2e8f0"
+       stroke-width="1.2"
+       id="rect202" />
+    <rect
+       x="0"
+       y="0"
+       width="6"
+       height="100"
+       rx="3"
+       fill="#94a3b8"
+       id="rect203" />
+    <text
+       x="32"
+       y="20"
+       font-size="12px"
+       font-weight="700"
+       fill="#475569"
+       letter-spacing="2"
+       id="text203">WHY THIS WORKS</text>
+    <text
+       x="32"
+       y="40"
+       font-size="14px"
+       fill="#334155"
+       id="text204" />
+    <text
+       x="28.666958"
+       y="46.503281"
+       font-size="14px"
+       fill="#334155"
+       id="text205"><tspan
+         sodipodi:role="line"
+         x="28.666958"
+         y="46.503281"
+         id="tspan216">Trees split the feature space into regions — the leaves. Two points landing in the same leaf are treated identically by that tree.</tspan><tspan
+         sodipodi:role="line"
+         x="28.666958"
+         y="64.003281"
+         id="tspan217">Counting shared leaves across the whole forest yields a similarity that reflects what the model actually attends to, not raw feature distance.</tspan><tspan
+         sodipodi:role="line"
+         id="tspan215"
+         x="28.666958"
+         y="81.503281">It is interpretable, model-faithful, cheap to compute, and complements SHAP / LIME-style attributions.</tspan></text>
+  </g>
+</svg>

@@ -1,13 +1,20 @@
-"""Define leafsim."""
+"""
+LeafSim — example-based explanations for tree-based ensemble models.
+
+For a given prediction, LeafSim identifies the training samples most similar to
+the sample being explained. Similarity is measured by counting how many trees in
+the ensemble assign both samples to the same leaf node (Hamming distance over leaf
+indices). A high score means the two samples follow the same decision paths through
+the forest, making them naturally comparable for explanation purposes.
+"""
 import logging
 from typing import Optional, Union
 
 import numpy as np
 from sklearn.metrics import DistanceMetric
 
-# TODO: Decide whether to default to
-#  .addHandler(logging.NullHandler()) if nothing specified
 logger = logging.getLogger("leafsim")
+logger.addHandler(logging.NullHandler())
 
 # Functions that get leaf indices for the different models supported by LeafSim
 # E.g. catboost models use calc_leaf_indexes() while sklearn models use apply()
@@ -16,6 +23,8 @@ LEAF_INDEX_FUNC = {
     "CatBoostClassifier": "calc_leaf_indexes",
     "RandomForestRegressor": "apply",
     "RandomForestClassifier": "apply",
+    "XGBRegressor": "apply",
+    "XGBClassifier": "apply",
 }
 # Default parameters to use for the models supported by LeafSim
 LEAF_INDEX_DEFAULT_PARAMS = {
@@ -25,8 +34,16 @@ LEAF_INDEX_DEFAULT_PARAMS = {
         "thread_count": -1,
         "verbose": False,
     },
+    "CatBoostClassifier": {
+        "ntree_start": 0,
+        "ntree_end": 0,
+        "thread_count": -1,
+        "verbose": False,
+    },
     "RandomForestRegressor": {},
     "RandomForestClassifier": {},
+    "XGBRegressor": {},
+    "XGBClassifier": {},
 }
 
 SUPPORTED_MODELS = sorted(list(LEAF_INDEX_FUNC.keys()))
@@ -35,7 +52,7 @@ SUPPORTED_MODELS = sorted(list(LEAF_INDEX_FUNC.keys()))
 class LeafSim:
     """LeafSim class."""
 
-    def __init__(self, model, index_func_params: None | dict = None):
+    def __init__(self, model, index_func_params: Optional[dict] = None):
         """
         Initialise the LeafSim instance.
 
@@ -58,16 +75,12 @@ class LeafSim:
             try:
                 index_func = self.model.get_leaf_indices
             except AttributeError:
-                error_msg = "".join(
-                    [
-                        "Provide one the following currently supported models:\n\n",
-                        "\n".join(SUPPORTED_MODELS) + "\n\n",
-                        "or provide a custom model instance that ",
-                        "has get_leaf_indices as attribute.\n",
-                        "This is a function that returns the index of every predictor ",
-                        "in the ensemble in the form of a matrix: ",
-                        "[n_samples, n_predictors]",
-                    ]
+                supported = "\n".join(SUPPORTED_MODELS)
+                error_msg = (
+                    f"Provide one of the following currently supported models:\n\n"
+                    f"{supported}\n\n"
+                    f"or provide a custom model instance with a get_leaf_indices attribute.\n"
+                    f"This must be a function that returns leaf indices as a matrix of shape [n_samples, n_predictors]."
                 )
                 raise TypeError(error_msg)
         else:
@@ -76,8 +89,9 @@ class LeafSim:
 
         # Get leaf indexing function parameters
         if index_func_params is None:
-            # Get default parameters if specified
             self.index_func_params = LEAF_INDEX_DEFAULT_PARAMS.get(self.model_name, {})
+        else:
+            self.index_func_params = index_func_params
 
     def get_leaf_indices(self, X: np.ndarray, params: Optional[dict] = None):
         """
@@ -130,6 +144,10 @@ class LeafSim:
                                   in the top_n_ids and the observation one wishes
                                   to generate an explanation for.
         """
+        if top_n > X_train.shape[0]:
+            raise ValueError(
+                f"top_n ({top_n}) cannot exceed the number of training samples ({X_train.shape[0]})"
+            )
         logger.info("Getting leaf indices of samples in training data")
         train_leaf_indices = self.get_leaf_indices(X_train, params)
         logger.info("Getting leaf indices of samples in test data")
@@ -138,10 +156,7 @@ class LeafSim:
         distances = DistanceMetric.get_metric("hamming").pairwise(
             X=test_leaf_indices, Y=train_leaf_indices
         )
-        logger.info(
-            f"Identifying Top {top_n} most similar test data points"
-            + " for each training data point"
-        )
+        logger.info(f"Identifying top {top_n} most similar training data points for each test data point")
         sorted_distances = np.argsort(distances, axis=1)
         # For each instance we want to explain, select only
         # the top N similar training instances
@@ -151,13 +166,8 @@ class LeafSim:
         # For the top N most similar training instances,
         # obtain their corresponding similarity score
         # Shape: # test samples, similarity of Top N train samples
-        top_n_similarity = np.stack(
-            [
-                # Similarity is simply 1 minus distance
-                1 - distances[i, top_n_ids[i, :]]
-                for i in range(distances.shape[0])
-            ]
-        )
+        row_idx = np.arange(distances.shape[0])[:, None]
+        top_n_similarity = 1 - distances[row_idx, top_n_ids]
 
         if return_all_similarities:
             similarities = 1 - distances
