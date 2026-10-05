@@ -2720,7 +2720,7 @@ Object.defineProperty(e,"__esModule",{value:!0}),e.mhchemParser=void 0;var r=fun
 
 <section id="summary" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Summary</h1>
-<p>This blog presents <code>LeafSim</code>, an example-based <strong>explainable AI</strong> (<strong>XAI</strong>) technique for decision tree based ensemble methods.<br> The process applies the Hamming distance on leaf indices to measure similarity between instances in the test and training set.<br> It therefore explains model predictions by identifying training data points that most influenced a given prediction.</p>
+<p>This blog presents <code>LeafSim</code>, an example-based <strong>explainable AI</strong> (<strong>XAI</strong>) technique for decision tree based ensemble methods.<br> It measures the similarity between instances in the test and training set as the fraction of trees in which they land in the same leaf (the random forest proximity of Breiman and Cutler).<br> It therefore explains model predictions by identifying the training data points the model considers most similar to the instance being predicted.</p>
 <p>The proposed technique is:</p>
 <ul>
 <li>easy to interpret by non-technical people</li>
