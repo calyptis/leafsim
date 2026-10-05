@@ -24,7 +24,16 @@ dev = [
     "ruff>=0.15.12",
     "xgboost>=1.7",
 ]
-notebooks = ["matplotlib>=3.6", "notebook>=7.0", "pandas>=1.5", "seaborn>=0.12", "xgboost>=1.7"]
+notebooks = [
+    "catboost>=1.2",
+    "jupyter-black>=0.3",
+    "matplotlib>=3.6",
+    "notebook>=7.0",
+    "pandas>=2.1",
+    "seaborn>=0.12",
+    "shap>=0.42",
+    "xgboost>=1.7",
+]
 
 [build-system]
 requires = [
