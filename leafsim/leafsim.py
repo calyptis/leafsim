@@ -10,9 +10,11 @@ ensemble, making them naturally comparable for explanation purposes.
 """
 
 import logging
+import warnings
 from typing import Optional, Union
 
 import numpy as np
+from sklearn.exceptions import NotFittedError
 from sklearn.metrics import DistanceMetric
 
 logger = logging.getLogger("leafsim")
@@ -54,6 +56,10 @@ LEAF_INDEX_DEFAULT_PARAMS = {
 }
 
 SUPPORTED_MODELS = sorted(list(LEAF_INDEX_FUNC.keys()))
+
+# Maximum number of (test, train) pairs scored at once. Each batch holds a few 8-byte
+# arrays of this size, so peak working memory stays around 100 MB.
+_BATCH_ELEMENTS = 2**22
 
 
 def _supported_base_name(model) -> Optional[str]:
@@ -135,6 +141,115 @@ class LeafSim:
         # and iteration as a 3D array: flatten so that every tree is a column
         return leaf_indices.reshape(leaf_indices.shape[0], -1)
 
+    def fit(self, X_train: np.ndarray, params: Optional[dict] = None) -> "LeafSim":
+        """
+        Compute and cache the leaf indices of the training data.
+
+        Call this once, then call explain() as often as needed without
+        recomputing the training leaf indices.
+
+        :param X_train: Data the model to explain was trained on.
+        :param params: Parameters for the leaf indexing function, for this call only.
+        :return self: The fitted LeafSim instance.
+        """
+        logger.info("Getting leaf indices of samples in training data")
+        self.train_leaf_indices_ = self.get_leaf_indices(X_train, params)
+        return self
+
+    def _check_fitted(self) -> np.ndarray:
+        try:
+            return self.train_leaf_indices_
+        except AttributeError:
+            raise NotFittedError("Call fit(X_train) before explaining predictions.") from None
+
+    def explain(
+        self,
+        X_to_explain: np.ndarray,
+        top_n: int = 10,
+        params: Optional[dict] = None,
+    ) -> tuple[np.ndarray, np.ndarray]:
+        """
+        Identify the training examples most similar to each row of X_to_explain.
+
+        Similarities are computed in batches of test rows, so memory stays bounded
+        regardless of the number of rows to explain, and only the top_n per row are
+        sorted. Ties are broken by the lowest training index.
+
+        :param X_to_explain: Data points one wishes to generate explanations for.
+        :param top_n: The number of explanations to provide per data point.
+        :param params: Parameters for the leaf indexing function, for this call only.
+        :return top_n_ids: Integer location for the observations in X_train that are among
+                           the top_n, most similar first. Shape: (n_to_explain, top_n).
+        :return top_n_similarity: The corresponding similarity, i.e. the fraction of trees
+                                  in which the observation in top_n_ids and the observation
+                                  one wishes to generate an explanation for share a leaf.
+        """
+        train_leaf_indices = self._check_fitted()
+        n_train, n_trees = train_leaf_indices.shape
+        if not 1 <= top_n <= n_train:
+            raise ValueError(
+                f"top_n ({top_n}) must be between 1 and the number of training samples ({n_train})"
+            )
+        logger.info("Getting leaf indices of samples in test data")
+        test_leaf_indices = self.get_leaf_indices(X_to_explain, params)
+        logger.info(
+            f"Identifying top {top_n} most similar training data points for each test data point"
+        )
+        n_test = test_leaf_indices.shape[0]
+        top_n_ids = np.empty((n_test, top_n), dtype=np.intp)
+        top_n_mismatches = np.empty((n_test, top_n), dtype=np.int64)
+        train_idx = np.arange(n_train, dtype=np.int64)
+        for start, stop in self._batches(n_test, n_train):
+            mismatches = self._mismatches(test_leaf_indices[start:stop], train_leaf_indices)
+            # A unique integer key that orders by mismatches, then by training index,
+            # so selecting the top_n is exact and deterministic under ties
+            key = mismatches * n_train + train_idx
+            ids = np.argpartition(key, top_n - 1, axis=1)[:, :top_n]
+            top_keys = np.take_along_axis(key, ids, axis=1)
+            ids = np.take_along_axis(ids, np.argsort(top_keys, axis=1), axis=1)
+            top_n_ids[start:stop] = ids
+            top_n_mismatches[start:stop] = np.take_along_axis(mismatches, ids, axis=1)
+
+        top_n_similarity = 1 - top_n_mismatches / n_trees
+        return top_n_ids, top_n_similarity
+
+    def pairwise_similarities(
+        self, X_to_explain: np.ndarray, params: Optional[dict] = None
+    ) -> np.ndarray:
+        """
+        Compute the similarity between every row of X_to_explain and every training row.
+
+        This builds a dense matrix of shape (n_to_explain, n_train): prefer explain()
+        when only the most similar training rows are needed.
+
+        :param X_to_explain: Data points one wishes to compare to the training data.
+        :param params: Parameters for the leaf indexing function, for this call only.
+        :return similarities: Fraction of trees in which each pair shares a leaf.
+        """
+        train_leaf_indices = self._check_fitted()
+        test_leaf_indices = self.get_leaf_indices(X_to_explain, params)
+        logger.info("Measuring similarities between every train and test data point")
+        return (
+            1
+            - self._mismatches(test_leaf_indices, train_leaf_indices)
+            / (train_leaf_indices.shape[1])
+        )
+
+    @staticmethod
+    def _batches(n_test: int, n_train: int):
+        """Yield (start, stop) ranges of test rows whose score matrix fits a fixed budget."""
+        batch_size = max(1, _BATCH_ELEMENTS // max(n_train, 1))
+        for start in range(0, n_test, batch_size):
+            yield start, min(start + batch_size, n_test)
+
+    @staticmethod
+    def _mismatches(test_leaf_indices: np.ndarray, train_leaf_indices: np.ndarray) -> np.ndarray:
+        """Count, for every pair of rows, the trees in which they land in different leaves."""
+        distances = DistanceMetric.get_metric("hamming").pairwise(
+            X=test_leaf_indices, Y=train_leaf_indices
+        )
+        return np.rint(distances * train_leaf_indices.shape[1]).astype(np.int64)
+
     def generate_explanations(
         self,
         X_train: np.ndarray,
@@ -144,56 +259,37 @@ class LeafSim:
         return_all_similarities: bool = False,
     ) -> Union[tuple[np.ndarray, np.ndarray], tuple[np.ndarray, np.ndarray, np.ndarray]]:
         """
-        Identify the training examples that explain the prediction of X_to_explain.
+        Identify the training examples most similar to each row of X_to_explain.
+
+        Shorthand for fit(X_train, params).explain(X_to_explain, top_n, params).
+        To explain several batches against the same training data, call fit() once
+        and explain() per batch instead, so the training leaf indices are reused.
 
         :param X_train: Data the model to explain was trained on.
         :param X_to_explain: Data points one wished to generate explanations for.
         :param params: Parameters for the function that returns
-                       indices of leaves for every observation in X_to_explain.
+                       indices of leaves for every observation.
                        See official documentation of the LEAF_INDEX_FUNC functions
                        supported by LeafSim.
         :param top_n: The number of explanations to provide.
                       By default, provide the 10 closest matches to every
                       observation in X_to_explain.
-        :param return_all_similarities: Whether to return the similarities for
+        :param return_all_similarities: Deprecated, use pairwise_similarities() instead.
+                                        Whether to also return the similarities for
                                         all training observations.
-        :return top_n_ids: Integer location for the observations in X_train that are among
-                           the top_n.
-        :return top_n_similarity: The corresponding similarity, i.e. the fraction of trees
-                                  in which the observation in top_n_ids and the observation
-                                  one wishes to generate an explanation for share a leaf.
+        :return top_n_ids: See explain().
+        :return top_n_similarity: See explain().
         """
-        if top_n > X_train.shape[0]:
-            raise ValueError(
-                f"top_n ({top_n}) cannot exceed the number of training samples"
-                f" ({X_train.shape[0]})"
-            )
-        logger.info("Getting leaf indices of samples in training data")
-        train_leaf_indices = self.get_leaf_indices(X_train, params)
-        logger.info("Getting leaf indices of samples in test data")
-        test_leaf_indices = self.get_leaf_indices(X_to_explain, params)
-        logger.info("Measuring distances between every train and test data point")
-        distances = DistanceMetric.get_metric("hamming").pairwise(
-            X=test_leaf_indices, Y=train_leaf_indices
+        top_n_ids, top_n_similarity = self.fit(X_train, params).explain(
+            X_to_explain, top_n, params
         )
-        logger.info(
-            f"Identifying top {top_n} most similar training data points for each test data point"
-        )
-        # Stable sort: ties are broken by the lowest training index
-        sorted_distances = np.argsort(distances, axis=1, kind="stable")
-        # For each instance we want to explain, select only
-        # the top N similar training instances
-        # Shape: # test samples, Top N most similar train samples
-        top_n_ids = sorted_distances[:, :top_n]
-
-        # For the top N most similar training instances,
-        # obtain their corresponding similarity score
-        # Shape: # test samples, similarity of Top N train samples
-        row_idx = np.arange(distances.shape[0])[:, None]
-        top_n_similarity = 1 - distances[row_idx, top_n_ids]
-
         if return_all_similarities:
-            similarities = 1 - distances
+            warnings.warn(
+                "return_all_similarities is deprecated and will be removed in a future"
+                " release; use fit(X_train).pairwise_similarities(X_to_explain) instead.",
+                DeprecationWarning,
+                stacklevel=2,
+            )
+            similarities = self.pairwise_similarities(X_to_explain, params)
             return top_n_ids, top_n_similarity, similarities
-        else:
-            return top_n_ids, top_n_similarity
+        return top_n_ids, top_n_similarity

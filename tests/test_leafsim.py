@@ -12,8 +12,10 @@ from sklearn.ensemble import (
     RandomForestClassifier,
     RandomForestRegressor,
 )
+from sklearn.exceptions import NotFittedError
 from sklearn.model_selection import train_test_split
 
+import leafsim.leafsim
 from leafsim import SUPPORTED_MODELS, LeafSim
 
 
@@ -110,10 +112,11 @@ def test_similarity_range(fitted_classifier, iris):
     assert np.all(sims <= 1)
 
 
-def test_return_all_similarities(fitted_classifier, iris):
+def test_return_all_similarities_is_deprecated(fitted_classifier, iris):
     X_train, X_test, _ = iris
     ls = LeafSim(fitted_classifier)
-    result = ls.generate_explanations(X_train, X_test, top_n=5, return_all_similarities=True)
+    with pytest.warns(DeprecationWarning, match="pairwise_similarities"):
+        result = ls.generate_explanations(X_train, X_test, top_n=5, return_all_similarities=True)
     assert len(result) == 3
     ids, top_sims, all_sims = result
     assert all_sims.shape == (X_test.shape[0], X_train.shape[0])
@@ -338,3 +341,63 @@ def test_ties_are_broken_by_lowest_training_index():
     # Order: similarity descending, then training index ascending
     expected = np.lexsort((np.arange(500), -sims[0][np.argsort(ids[0])]))
     np.testing.assert_array_equal(ids[0], expected)
+
+
+# --- fit / explain ---
+
+
+def test_fit_caches_training_leaves():
+    model = RecordingModel()
+    X_train = np.array([[0, 0], [0, 1], [1, 1]])
+    ls = LeafSim(model).fit(X_train)
+    ls.explain(X_train[:1], top_n=2)
+    ls.explain(X_train[1:], top_n=2)
+    # One call for the training data, one per explain call
+    assert len(model.calls) == 3
+
+
+def test_explain_matches_generate_explanations(fitted_classifier, iris):
+    X_train, X_test, _ = iris
+    ls = LeafSim(fitted_classifier)
+    expected_ids, expected_sims = ls.generate_explanations(X_train, X_test, top_n=7)
+    ids, sims = ls.fit(X_train).explain(X_test, top_n=7)
+    np.testing.assert_array_equal(ids, expected_ids)
+    np.testing.assert_allclose(sims, expected_sims)
+
+
+def test_explain_before_fit_raises(fitted_classifier, iris):
+    _, X_test, _ = iris
+    with pytest.raises(NotFittedError):
+        LeafSim(fitted_classifier).explain(X_test)
+
+
+def test_pairwise_similarities_match_brute_force(fitted_classifier, iris):
+    X_train, X_test, _ = iris
+    train_leaves = fitted_classifier.apply(X_train)
+    test_leaves = fitted_classifier.apply(X_test)
+    expected = (test_leaves[:, None, :] == train_leaves[None, :, :]).mean(axis=2)
+    sims = LeafSim(fitted_classifier).fit(X_train).pairwise_similarities(X_test)
+    np.testing.assert_allclose(sims, expected)
+
+
+@pytest.mark.parametrize("top_n", [0, -1])
+def test_non_positive_top_n_raises(fitted_classifier, iris, top_n):
+    X_train, X_test, _ = iris
+    with pytest.raises(ValueError, match="top_n"):
+        LeafSim(fitted_classifier).fit(X_train).explain(X_test, top_n=top_n)
+
+
+def test_batched_scoring_matches_brute_force(monkeypatch, fitted_classifier, iris):
+    # Force tiny batches so that results must be stitched across many of them
+    monkeypatch.setattr(leafsim.leafsim, "_BATCH_ELEMENTS", 250)
+    X_train, X_test, _ = iris
+    train_leaves = fitted_classifier.apply(X_train)
+    test_leaves = fitted_classifier.apply(X_test)
+    expected = (test_leaves[:, None, :] == train_leaves[None, :, :]).mean(axis=2)
+    expected_ids = np.lexsort(
+        (np.broadcast_to(np.arange(len(X_train)), expected.shape), -expected)
+    )
+
+    ids, sims = LeafSim(fitted_classifier).fit(X_train).explain(X_test, top_n=10)
+    np.testing.assert_array_equal(ids, expected_ids[:, :10])
+    np.testing.assert_allclose(sims, np.take_along_axis(expected, ids, axis=1))
