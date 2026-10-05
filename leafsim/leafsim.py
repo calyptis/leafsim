@@ -18,10 +18,17 @@ logger = logging.getLogger("leafsim")
 logger.addHandler(logging.NullHandler())
 
 # Functions that get leaf indices for the different models supported by LeafSim
-# E.g. catboost models use calc_leaf_indexes() while sklearn models use apply()
+# E.g. catboost models use calc_leaf_indexes() while sklearn models use apply().
+# Models are matched by class name anywhere in their MRO, so subclasses are supported too.
 LEAF_INDEX_FUNC = {
     "CatBoostRegressor": "calc_leaf_indexes",
     "CatBoostClassifier": "calc_leaf_indexes",
+    "ExtraTreesRegressor": "apply",
+    "ExtraTreesClassifier": "apply",
+    "GradientBoostingRegressor": "apply",
+    "GradientBoostingClassifier": "apply",
+    "LGBMRegressor": "predict",
+    "LGBMClassifier": "predict",
     "RandomForestRegressor": "apply",
     "RandomForestClassifier": "apply",
     "XGBRegressor": "apply",
@@ -41,13 +48,19 @@ LEAF_INDEX_DEFAULT_PARAMS = {
         "thread_count": -1,
         "verbose": False,
     },
-    "RandomForestRegressor": {},
-    "RandomForestClassifier": {},
-    "XGBRegressor": {},
-    "XGBClassifier": {},
+    "LGBMRegressor": {"pred_leaf": True},
+    "LGBMClassifier": {"pred_leaf": True},
 }
 
 SUPPORTED_MODELS = sorted(list(LEAF_INDEX_FUNC.keys()))
+
+
+def _supported_base_name(model) -> Optional[str]:
+    """Return the first class name in the model's MRO that LeafSim supports."""
+    for cls in type(model).__mro__:
+        if cls.__name__ in LEAF_INDEX_FUNC:
+            return cls.__name__
+    return None
 
 
 class LeafSim:
@@ -69,8 +82,8 @@ class LeafSim:
         self.model_name = str(self.model.__class__.__name__)
 
         # Get leaf indexing function
-        index_func = LEAF_INDEX_FUNC.get(self.model_name, None)
-        if index_func is None:
+        base_name = _supported_base_name(self.model)
+        if base_name is None:
             # If providing a model that is not supported by LeafSim out of the box
             # This new model needs to have an attribute "get_leaf_indices"
             try:
@@ -86,12 +99,12 @@ class LeafSim:
                 )
                 raise TypeError(error_msg)
         else:
-            index_func = self.model.__getattribute__(index_func)
+            index_func = getattr(self.model, LEAF_INDEX_FUNC[base_name])
         self.index_func = index_func
 
         # Get leaf indexing function parameters
         if index_func_params is None:
-            self.index_func_params = LEAF_INDEX_DEFAULT_PARAMS.get(self.model_name, {})
+            self.index_func_params = LEAF_INDEX_DEFAULT_PARAMS.get(base_name, {})
         else:
             self.index_func_params = index_func_params
 
@@ -112,9 +125,11 @@ class LeafSim:
 
         # Get a matrix with each row containing the leaf indices
         # across all trees for a given instance
-        leaf_indices = self.index_func(X, **self.index_func_params)
+        leaf_indices = np.asarray(self.index_func(X, **self.index_func_params))
 
-        return leaf_indices
+        # Some models (e.g. multiclass GradientBoosting) return one tree per class
+        # and iteration as a 3D array: flatten so that every tree is a column
+        return leaf_indices.reshape(leaf_indices.shape[0], -1)
 
     def generate_explanations(
         self,

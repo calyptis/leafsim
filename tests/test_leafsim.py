@@ -3,7 +3,15 @@
 import numpy as np
 import pytest
 from sklearn.datasets import load_iris
-from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
+from sklearn.ensemble import (
+    ExtraTreesClassifier,
+    ExtraTreesRegressor,
+    GradientBoostingClassifier,
+    GradientBoostingRegressor,
+    HistGradientBoostingClassifier,
+    RandomForestClassifier,
+    RandomForestRegressor,
+)
 from sklearn.model_selection import train_test_split
 
 from leafsim import SUPPORTED_MODELS, LeafSim
@@ -224,3 +232,64 @@ def test_catboost_classifier(iris):
     ids, sims = LeafSim(model).generate_explanations(X_train, X_test, top_n=5)
     assert ids.shape == (X_test.shape[0], 5)
     assert np.all(sims >= 0) and np.all(sims <= 1)
+
+
+# --- Model detection ---
+
+
+def _assert_matches_reference(model, leaves_train, leaves_test, X_train, X_test, top_n=5):
+    leaves_train = np.asarray(leaves_train).reshape(len(X_train), -1)
+    leaves_test = np.asarray(leaves_test).reshape(len(X_test), -1)
+    expected = (leaves_test[:, None, :] == leaves_train[None, :, :]).mean(axis=2)
+    ids, sims = LeafSim(model).generate_explanations(X_train, X_test, top_n=top_n)
+    row_idx = np.arange(len(X_test))[:, None]
+    np.testing.assert_allclose(sims, expected[row_idx, ids])
+    np.testing.assert_allclose(sims, -np.sort(-expected, axis=1)[:, :top_n])
+
+
+def test_subclass_of_supported_model_is_accepted(iris):
+    X_train, X_test, y_train = iris
+
+    class MyForest(RandomForestClassifier):
+        pass
+
+    model = MyForest(n_estimators=10, random_state=42).fit(X_train, y_train)
+    assert LeafSim(model).model_name == "MyForest"
+    _assert_matches_reference(model, model.apply(X_train), model.apply(X_test), X_train, X_test)
+
+
+@pytest.mark.parametrize(
+    "model_cls",
+    [
+        ExtraTreesClassifier,
+        ExtraTreesRegressor,
+        GradientBoostingClassifier,
+        GradientBoostingRegressor,
+    ],
+)
+def test_other_sklearn_tree_ensembles(iris, model_cls):
+    X_train, X_test, y_train = iris
+    model = model_cls(n_estimators=10, random_state=42).fit(X_train, y_train)
+    _assert_matches_reference(model, model.apply(X_train), model.apply(X_test), X_train, X_test)
+
+
+@pytest.mark.parametrize("model_name", ["LGBMClassifier", "LGBMRegressor"])
+def test_lightgbm(iris, model_name):
+    lightgbm = pytest.importorskip("lightgbm")
+    X_train, X_test, y_train = iris
+    model = getattr(lightgbm, model_name)(n_estimators=10, random_state=42, verbose=-1)
+    model.fit(X_train, y_train)
+    _assert_matches_reference(
+        model,
+        model.predict(X_train, pred_leaf=True),
+        model.predict(X_test, pred_leaf=True),
+        X_train,
+        X_test,
+    )
+
+
+def test_model_without_leaf_indices_is_rejected(iris):
+    X_train, _, y_train = iris
+    model = HistGradientBoostingClassifier(max_iter=5).fit(X_train, y_train)
+    with pytest.raises(TypeError, match="currently supported models"):
+        LeafSim(model)
