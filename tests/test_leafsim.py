@@ -44,10 +44,17 @@ def test_construction_regressor(fitted_regressor):
     assert ls.model_name == "RandomForestRegressor"
 
 
-def test_construction_custom_index_func_params(fitted_classifier):
-    params = {"check_input": False}
-    ls = LeafSim(fitted_classifier, index_func_params=params)
-    assert ls.index_func_params == params
+def test_construction_custom_index_func_params_are_forwarded():
+    class TruncatingModel:
+        def get_leaf_indices(self, X, n_trees=3):
+            return np.asarray(X)[:, :n_trees]
+
+    X_train = np.array([[0, 0, 0], [0, 1, 1]])
+    X_test = np.array([[0, 1, 1]])
+    ls = LeafSim(TruncatingModel(), index_func_params={"n_trees": 1})
+    _, sims = ls.generate_explanations(X_train, X_test, top_n=2)
+    # Only the first "tree" is compared, so both training rows match fully
+    np.testing.assert_allclose(sims, [[1.0, 1.0]])
 
 
 def test_construction_unsupported_model_raises():
@@ -142,5 +149,78 @@ def test_xgb_classifier(iris):
     ls = LeafSim(model)
     assert ls.model_name == "XGBClassifier"
     ids, sims = ls.generate_explanations(X_train, X_test, top_n=5)
+    assert ids.shape == (X_test.shape[0], 5)
+    assert np.all(sims >= 0) and np.all(sims <= 1)
+
+
+# --- Correctness ---
+
+
+class LeavesAsFeatures:
+    """Custom model whose leaf indices are the input rows themselves."""
+
+    def get_leaf_indices(self, X, **kwargs):
+        return np.asarray(X)
+
+
+def test_neighbours_match_hand_computed_similarities():
+    X_train = np.array([[0, 0, 0], [0, 0, 1], [1, 1, 1], [0, 1, 1]])
+    X_test = np.array([[0, 0, 0]])
+    ls = LeafSim(LeavesAsFeatures())
+    ids, sims = ls.generate_explanations(X_train, X_test, top_n=4)
+    np.testing.assert_array_equal(ids, [[0, 1, 3, 2]])
+    np.testing.assert_allclose(sims, [[1, 2 / 3, 1 / 3, 0]])
+
+
+def test_neighbours_match_brute_force_proximity(fitted_classifier, iris):
+    X_train, X_test, _ = iris
+    train_leaves = fitted_classifier.apply(X_train)
+    test_leaves = fitted_classifier.apply(X_test)
+    expected = (test_leaves[:, None, :] == train_leaves[None, :, :]).mean(axis=2)
+
+    ls = LeafSim(fitted_classifier)
+    ids, sims = ls.generate_explanations(X_train, X_test, top_n=10)
+
+    row_idx = np.arange(X_test.shape[0])[:, None]
+    np.testing.assert_allclose(sims, expected[row_idx, ids])
+    np.testing.assert_allclose(sims, -np.sort(-expected, axis=1)[:, :10])
+
+
+def test_training_sample_is_its_own_nearest_neighbour(fitted_classifier, iris):
+    X_train, _, _ = iris
+    ls = LeafSim(fitted_classifier)
+    _, sims = ls.generate_explanations(X_train, X_train[:5], top_n=1)
+    np.testing.assert_allclose(sims[:, 0], 1.0)
+
+
+# --- CatBoost ---
+
+
+def test_catboost_regressor(iris):
+    catboost = pytest.importorskip("catboost")
+    X_train, X_test, y_train = iris
+    model = catboost.CatBoostRegressor(
+        iterations=10, random_seed=42, verbose=False, allow_writing_files=False
+    )
+    model.fit(X_train, y_train)
+    ls = LeafSim(model)
+    ids, sims = ls.generate_explanations(X_train, X_test, top_n=5)
+
+    leaves_train = model.calc_leaf_indexes(X_train)
+    leaves_test = model.calc_leaf_indexes(X_test)
+    expected = (leaves_test[:, None, :] == leaves_train[None, :, :]).mean(axis=2)
+    row_idx = np.arange(X_test.shape[0])[:, None]
+    np.testing.assert_allclose(sims, expected[row_idx, ids])
+    np.testing.assert_allclose(sims, -np.sort(-expected, axis=1)[:, :5])
+
+
+def test_catboost_classifier(iris):
+    catboost = pytest.importorskip("catboost")
+    X_train, X_test, y_train = iris
+    model = catboost.CatBoostClassifier(
+        iterations=10, random_seed=42, verbose=False, allow_writing_files=False
+    )
+    model.fit(X_train, y_train)
+    ids, sims = LeafSim(model).generate_explanations(X_train, X_test, top_n=5)
     assert ids.shape == (X_test.shape[0], 5)
     assert np.all(sims >= 0) and np.all(sims <= 1)
