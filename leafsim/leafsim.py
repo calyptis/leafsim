@@ -2,10 +2,11 @@
 LeafSim — example-based explanations for tree-based ensemble models.
 
 For a given prediction, LeafSim identifies the training samples most similar to
-the sample being explained. Similarity is measured by counting how many trees in
-the ensemble assign both samples to the same leaf node (Hamming distance over leaf
-indices). A high score means the two samples follow the same decision paths through
-the forest, making them naturally comparable for explanation purposes.
+the sample being explained. Similarity is the fraction of trees in the ensemble that
+assign both samples to the same leaf node (one minus the Hamming distance between
+their leaf indices); this is the random forest proximity of Breiman and Cutler.
+A high score means the two samples follow the same decision paths through the
+ensemble, making them naturally comparable for explanation purposes.
 """
 
 import logging
@@ -103,10 +104,12 @@ class LeafSim:
         self.index_func = index_func
 
         # Get leaf indexing function parameters
+        # Copy, so that changing one instance's params affects neither the
+        # module-level defaults nor the dict the caller passed in
         if index_func_params is None:
-            self.index_func_params = LEAF_INDEX_DEFAULT_PARAMS.get(base_name, {})
+            self.index_func_params = dict(LEAF_INDEX_DEFAULT_PARAMS.get(base_name, {}))
         else:
-            self.index_func_params = index_func_params
+            self.index_func_params = dict(index_func_params)
 
     def get_leaf_indices(self, X: np.ndarray, params: Optional[dict] = None):
         """
@@ -116,16 +119,17 @@ class LeafSim:
 
         :param X: feature matrix
         :param params:
-            These parameters passed onto the function that gets the indices.
+            Parameters passed onto the function that gets the indices, for this call only.
+            Defaults to the instance's index_func_params.
             Supported values depend on the model one wishes to generate explanations for.
-        :return leaf_indices: Indices of the leaves in the shape of (X.shape[0], # leaves)
+        :return leaf_indices: Indices of the leaves in the shape of (X.shape[0], # trees)
         """
-        if params is not None:
-            self.index_func_params = params
+        if params is None:
+            params = self.index_func_params
 
         # Get a matrix with each row containing the leaf indices
         # across all trees for a given instance
-        leaf_indices = np.asarray(self.index_func(X, **self.index_func_params))
+        leaf_indices = np.asarray(self.index_func(X, **params))
 
         # Some models (e.g. multiclass GradientBoosting) return one tree per class
         # and iteration as a 3D array: flatten so that every tree is a column
@@ -155,9 +159,9 @@ class LeafSim:
                                         all training observations.
         :return top_n_ids: Integer location for the observations in X_train that are among
                            the top_n.
-        :return top_n_similarity: The corresponding Hamming distance of the observation
-                                  in the top_n_ids and the observation one wishes
-                                  to generate an explanation for.
+        :return top_n_similarity: The corresponding similarity, i.e. the fraction of trees
+                                  in which the observation in top_n_ids and the observation
+                                  one wishes to generate an explanation for share a leaf.
         """
         if top_n > X_train.shape[0]:
             raise ValueError(
@@ -175,7 +179,8 @@ class LeafSim:
         logger.info(
             f"Identifying top {top_n} most similar training data points for each test data point"
         )
-        sorted_distances = np.argsort(distances, axis=1)
+        # Stable sort: ties are broken by the lowest training index
+        sorted_distances = np.argsort(distances, axis=1, kind="stable")
         # For each instance we want to explain, select only
         # the top N similar training instances
         # Shape: # test samples, Top N most similar train samples

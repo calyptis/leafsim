@@ -293,3 +293,48 @@ def test_model_without_leaf_indices_is_rejected(iris):
     model = HistGradientBoostingClassifier(max_iter=5).fit(X_train, y_train)
     with pytest.raises(TypeError, match="currently supported models"):
         LeafSim(model)
+
+
+# --- API behaviour ---
+
+
+class RecordingModel:
+    """Custom model that records the keyword arguments of every call."""
+
+    def __init__(self):
+        self.calls = []
+
+    def get_leaf_indices(self, X, **kwargs):
+        self.calls.append(kwargs)
+        return np.asarray(X)
+
+
+def test_per_call_params_do_not_replace_instance_defaults():
+    model = RecordingModel()
+    ls = LeafSim(model, index_func_params={"a": 1})
+    X = np.zeros((3, 2))
+    ls.generate_explanations(X, X, params={"a": 2}, top_n=1)
+    model.calls.clear()
+    ls.generate_explanations(X, X, top_n=1)
+    assert model.calls == [{"a": 1}, {"a": 1}]
+    assert ls.index_func_params == {"a": 1}
+
+
+def test_default_params_are_not_shared_between_instances(iris):
+    catboost = pytest.importorskip("catboost")
+    X_train, _, y_train = iris
+    model = catboost.CatBoostRegressor(iterations=2, verbose=False, allow_writing_files=False)
+    model.fit(X_train, y_train)
+    first, second = LeafSim(model), LeafSim(model)
+    first.index_func_params["ntree_end"] = 1
+    assert second.index_func_params["ntree_end"] == 0
+
+
+def test_ties_are_broken_by_lowest_training_index():
+    rng = np.random.default_rng(0)
+    X_train = rng.integers(0, 2, size=(500, 3))
+    X_test = np.array([[0, 1, 0]])
+    ids, sims = LeafSim(LeavesAsFeatures()).generate_explanations(X_train, X_test, top_n=500)
+    # Order: similarity descending, then training index ascending
+    expected = np.lexsort((np.arange(500), -sims[0][np.argsort(ids[0])]))
+    np.testing.assert_array_equal(ids[0], expected)
